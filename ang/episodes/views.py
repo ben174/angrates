@@ -8,6 +8,16 @@ import calendar
 from episodes.models import Episode, Hour
 
 
+def listing(request, search=None): 
+    episodes = Episode.objects.filter(description__icontains=search, 
+        summary__icontains=search,
+    )
+    return render(request, 'episodes/listing.html', {
+        'search': search, 
+        'episodes': episodes, 
+    })
+
+
 def home(request, year=None, month=None):
     try:
         year = int(year)

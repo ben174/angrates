@@ -48,15 +48,17 @@ td.today {
   font-size: 11px;
   text-overflow: ellipsis;
   white-space: nowrap;
-  width: 150px;
+  width: 210px;
   overflow: hidden;
   float: left;
 }
 
+/* 
 .tiny-label:hover { 
   text-overflow: inherit; 
   overflow: visible; 
 }
+*/ 
 
 .calendar-header { 
   margin-bottom: 20px; 
@@ -76,4 +78,8 @@ td.today {
 
 fieldset>label { 
   font-weight: bold; 
+}
+
+.weekend-column { 
+  display: none; 
 }

@@ -45,3 +45,9 @@ class Hour(models.Model):
     )
 
     download_link = models.URLField()
+
+    class Meta:
+        ordering = ['hour_num']
+
+    def __unicode__( self ):
+        return "%s (H%s)" % (self.episode, self.hour_num)

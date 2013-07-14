@@ -6,32 +6,20 @@
   <div class="hero-row hero-condensed">
     <div class="container">
       <div class="row-fluid">
-        <h1>Episode Calendar</h1>
+        <h1>Armstrong &amp; Getty</h1>
         <p class="lead">
-          A list of episodes.
+          Episode Calendar
         </p>
       </div>
     </div>
   </div>
 {% endblock %}
 {% block episodes %}
-  <div class="alert alert-success">
-    <p>
-    This calendar is used to assign an individual as the "on-call" person for a particular group for a given date.
-    This user will be the "go-to" person for the NOC and other groups to escalate issues to during off-hours. If no 
-    on-call user is specified, the NOC has been instructed to escalate directly to the group's manager.
-    </p>
-    <p>Use the form below to create and manage assignments.</p>
-  </div>
-  {% for episode in episodes %}
-
-    {{ episode }}<br />
-    {% for hour in episode.hour_set.all %}
-      &bull; {{ hour }}<br /> 
-    {% endfor %}
-
-  {% endfor %}
-
+  <script language="javascript">
+    function downloadEpisode(link) { 
+      document.location.href=link;
+    }
+  </script>
   <div class="row calendar-header">
     <div class="span3">
       <a href="/calendar/{{ prev_month_date.year }}/{{ prev_month_date.month }}" class="btn btn-inverse month-pager" id="prevtab">
@@ -50,13 +38,11 @@
   <table class="table table-bordered table-condensed calendar">
     <thead>
       <tr>
-        <th>Sunday</th>
         <th>Monday</th>
         <th>Tuesday</th>
         <th>Wednesday</th>
         <th>Thursday</th>
         <th>Friday</th>
-        <th>Saturday</th>
       </tr>           
     </thead>
     <tbody>
@@ -66,22 +52,25 @@
           </tr>
           <tr>
         {% endif %}
-        <td date="{{ caldate.0|date:"m/d/Y" }}" 
-          {% if caldate.0 == today %} class="today" {% endif %} 
-          {% if caldate.0.month != month_date.month %} class="other-month" {% endif %} 
-        >
-          <div class="caldate">{{ caldate.0.day }}</div>
-          {% if caldate.1 %}
-          <div class="assignment-entry clearfix"> 
-            {% for hour in caldate.1.hour_set.all %}
-              <div class="tiny-label">{{ hour.summary }}</div>
-            {% endfor %}
-          </div>
-          {% endif %}
-        </td>
+        {% if caldate.0.weekday < 5 %}
+          <td date="{{ caldate.0|date:"m/d/Y" }}" 
+            {% if caldate.0 == today %} class="today" {% endif %} 
+            {% if caldate.0.month != month_date.month %} class="other-month" {% endif %} 
+          >
+            <div class="caldate">{{ caldate.0.day }}</div>
+            {% if caldate.1 %}
+            <div class="assignment-entry clearfix"> 
+              {% for hour in caldate.1.hour_set.all %}
+                <div class="tiny-label" onclick="downloadEpisode('{{ hour.download_link }}');">
+                  <b>H{{ hour.hour_num }}</b> {{ hour.summary }}
+                </div>
+              {% endfor %}
+            </div>
+            {% endif %}
+          </td>
+        {% endif %}
       {% endfor %}
       </tr>
     </tbody>
   </table>
-
 {% endblock %}
