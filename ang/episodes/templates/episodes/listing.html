@@ -1,0 +1,27 @@
+{% extends 'episodes/base.html' %}
+{% block title %}Episode Listing{% endblock %}
+{% block header %}
+  <script type="text/javascript" src="{{ STATIC_URL }}js/oncall.js"></script>
+  <link href="{{ STATIC_URL }}css/calendar.css" rel="stylesheet">
+  <div class="hero-row hero-condensed">
+    <div class="container">
+      <div class="row-fluid">
+        <h1>Hour Listing</h1>
+        <p class="lead">
+          Searching for "{{ search }}"
+        </p>
+      </div>
+    </div>
+  </div>
+{% endblock %}
+{% block episodes %}
+  <div class="container">
+    {% for hour in hours %}
+      {% ifchanged %}
+        <h3>{{ hour.episode }}</h3>
+      {% endifchanged %}
+      <p><b>H{{ hour.hour_num }}</b> &bull; {{ hour.description }}</p>
+      <a href="{{ hour.download_link }}" class="btn btn-small btn-primary">Listen</a>
+    {% endfor %} 
+  </div>
+{% endblock %}

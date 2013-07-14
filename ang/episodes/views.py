@@ -8,13 +8,22 @@ import calendar
 from episodes.models import Episode, Hour
 
 
-def listing(request, search=None): 
-    episodes = Episode.objects.filter(description__icontains=search, 
-        summary__icontains=search,
-    )
+def listing(request): 
+    q = request.GET.get('q', '')
+    hours = Hour.objects.filter(description__icontains=q, 
+        summary__icontains=q,
+    ).order_by('episode__date', 'hour_num')
     return render(request, 'episodes/listing.html', {
-        'search': search, 
-        'episodes': episodes, 
+        'search': q, 
+        'hours': hours, 
+    })
+
+
+def episode(request, year, month, day): 
+    date = datetime.datetime(int(year), int(month), int(day))
+    episode = get_object_or_404(Episode, date=date)
+    return render(request, 'episodes/episode.html', {
+        'episode': episode, 
     })
 
 

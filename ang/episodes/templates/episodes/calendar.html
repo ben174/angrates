@@ -6,9 +6,9 @@
   <div class="hero-row hero-condensed">
     <div class="container">
       <div class="row-fluid">
-        <h1>Armstrong &amp; Getty</h1>
+        <h1>Episode Calendar</h1>
         <p class="lead">
-          Episode Calendar
+          {{ month_date|date:"F, Y" }}
         </p>
       </div>
     </div>
@@ -56,12 +56,13 @@
           <td date="{{ caldate.0|date:"m/d/Y" }}" 
             {% if caldate.0 == today %} class="today" {% endif %} 
             {% if caldate.0.month != month_date.month %} class="other-month" {% endif %} 
-          >
+            onclick="document.location.href='/episode/{{ caldate.0|date:"Y/m/d" }}'">
             <div class="caldate">{{ caldate.0.day }}</div>
             {% if caldate.1 %}
             <div class="assignment-entry clearfix"> 
               {% for hour in caldate.1.hour_set.all %}
-                <div class="tiny-label" onclick="downloadEpisode('{{ hour.download_link }}');">
+                <div class="tiny-label" >
+                  <!-- <i class="icon-play" onclick="downloadEpisode('{{ hour.download_link }}');"></i> -->
                   <b>H{{ hour.hour_num }}</b> {{ hour.summary }}
                 </div>
               {% endfor %}

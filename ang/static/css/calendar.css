@@ -83,3 +83,24 @@ fieldset>label {
 .weekend-column { 
   display: none; 
 }
+
+.hour-box { 
+  border: solid 2px #333; 
+  font-weight: bold;
+  border-radius: 5px; 
+  background-color: #667;
+  color: #FFF;
+  font-size: 40px; 
+  padding: 10px;
+  margin-right: 10px; 
+  text-align: center; 
+  padding-bottom: 3px;
+}
+
+.hour-line { 
+  margin-bottom: 10px;
+}
+
+.listen-button { 
+  margin-top: 4px;
+}

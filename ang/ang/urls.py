@@ -12,4 +12,6 @@ urlpatterns = patterns('',
     url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
     url(r'^admin/', include(admin.site.urls)),
     url(r'^$', 'episodes.views.home', name='home'), 
+    url(r'^listing/$', 'episodes.views.listing', name='listing'), 
+    url(r'^episode/(?P<year>\d+)/(?P<month>\d+)/(?P<day>\d+)$', 'episodes.views.episode', name="episode"),
 )

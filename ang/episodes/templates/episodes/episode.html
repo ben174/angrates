@@ -1,0 +1,35 @@
+{% extends 'episodes/base.html' %}
+{% block title %}Day View{% endblock %}
+{% block header %}
+  <script type="text/javascript" src="{{ STATIC_URL }}js/oncall.js"></script>
+  <link href="{{ STATIC_URL }}css/calendar.css" rel="stylesheet">
+  <div class="hero-row hero-condensed">
+    <div class="container">
+      <div class="row-fluid">
+        <h1>Day View</h1>
+        <p class="lead">
+          {{ date }}
+        </p>
+      </div>
+    </div>
+  </div>
+{% endblock %}
+{% block episodes %}
+  <div class="container">
+    <h2>{{ episode.date }}</h2>
+    {% for hour in episode.hour_set.all %}
+      <div class="clearfix hour-line">
+        <span class="pull-left hour-box">
+          H{{ hour.hour_num }}<br />
+          <div class="listen-button">
+            <a href="{{ hour.download_link }}" class="btn btn-mini btn-inverse listen-button">Listen</a>
+          </div>
+
+        </span>
+        <div> 
+          <blockquote><p>{{ hour.description }}</p></blockquote>
+        </div>
+      </div>
+    {% endfor %} 
+  </div>
+{% endblock %}
