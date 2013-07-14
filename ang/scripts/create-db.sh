@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
-rm ../tools.db
-rm tools.db
+rm ../episodes.db
+rm episodes.db
 ../manage.py syncdb 
 ./provision-data.py
-cp tools.db ../
+cp episodes.db ../

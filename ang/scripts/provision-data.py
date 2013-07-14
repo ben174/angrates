@@ -23,7 +23,7 @@ import feedparser
 
 
 def main():
-    #create_admin()
+    create_admin()
     read_rss()
 
 
@@ -49,6 +49,12 @@ def create_hour(entry):
     
     hour = Hour(episode=episode, hour_num=hour_num)
     hour.description = entry.summary
+    hour.download_link = entry.link
+    hour.summary = entry.content[0]['value']
+    hour.duration = entry.itunes_duration
+    hour.title = entry.title
+    
+
     hour.save()
     
     print 'Hour create. Date: %s, Hour: %s' % (str(date), str(hour))

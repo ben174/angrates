@@ -107,16 +107,14 @@ AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.RemoteUserBackend',
 )
 
-ROOT_URLCONF = 'kixeye.urls'
+ROOT_URLCONF = 'ang.urls'
 
 # Python dotted path to the WSGI application used by Django's runserver.
-WSGI_APPLICATION = 'kixeye.wsgi.application'
+WSGI_APPLICATION = 'ang.wsgi.application'
 
 TEMPLATE_DIRS = (
-    # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
-    # Always use forward slashes, even on Windows.
-    # Don't forget to use absolute paths, not relative paths.
-    'templates/',
+    join(DIR, 'templates'),
+    join(DIR, 'episodes/templates/episodes'),
 )
 
 INSTALLED_APPS = (

@@ -1,0 +1,87 @@
+{% extends 'episodes/base.html' %}
+{% block title %}Episode Calendar{% endblock %}
+{% block header %}
+  <script type="text/javascript" src="{{ STATIC_URL }}js/oncall.js"></script>
+  <link href="{{ STATIC_URL }}css/calendar.css" rel="stylesheet">
+  <div class="hero-row hero-condensed">
+    <div class="container">
+      <div class="row-fluid">
+        <h1>Episode Calendar</h1>
+        <p class="lead">
+          A list of episodes.
+        </p>
+      </div>
+    </div>
+  </div>
+{% endblock %}
+{% block episodes %}
+  <div class="alert alert-success">
+    <p>
+    This calendar is used to assign an individual as the "on-call" person for a particular group for a given date.
+    This user will be the "go-to" person for the NOC and other groups to escalate issues to during off-hours. If no 
+    on-call user is specified, the NOC has been instructed to escalate directly to the group's manager.
+    </p>
+    <p>Use the form below to create and manage assignments.</p>
+  </div>
+  {% for episode in episodes %}
+
+    {{ episode }}<br />
+    {% for hour in episode.hour_set.all %}
+      &bull; {{ hour }}<br /> 
+    {% endfor %}
+
+  {% endfor %}
+
+  <div class="row calendar-header">
+    <div class="span3">
+      <a href="/calendar/{{ prev_month_date.year }}/{{ prev_month_date.month }}" class="btn btn-inverse month-pager" id="prevtab">
+        <i class="icon-arrow-left icon-white"></i> {{ prev_month_date|date:"F, Y" }}
+      </a>
+    </div>
+    <div class="span6">
+      <h1 style="float: none; text-align: center;">{{ month_date|date:"F, Y" }}</h1>
+    </div>
+    <div class="span3 next-button">
+      <a href="/calendar/{{ next_month_date.year }}/{{ next_month_date.month }}" class="btn btn-inverse month-pager" id="nexttab">
+        {{ next_month_date|date:"F, Y" }} <i class="icon-arrow-right icon-white"></i>
+      </a>
+    </div>
+  </div>
+  <table class="table table-bordered table-condensed calendar">
+    <thead>
+      <tr>
+        <th>Sunday</th>
+        <th>Monday</th>
+        <th>Tuesday</th>
+        <th>Wednesday</th>
+        <th>Thursday</th>
+        <th>Friday</th>
+        <th>Saturday</th>
+      </tr>           
+    </thead>
+    <tbody>
+      <tr>
+      {% for caldate in dates %}
+        {% if forloop.counter0|divisibleby:7 %}
+          </tr>
+          <tr>
+        {% endif %}
+        <td date="{{ caldate.0|date:"m/d/Y" }}" 
+          {% if caldate.0 == today %} class="today" {% endif %} 
+          {% if caldate.0.month != month_date.month %} class="other-month" {% endif %} 
+        >
+          <div class="caldate">{{ caldate.0.day }}</div>
+          {% if caldate.1 %}
+          <div class="assignment-entry clearfix"> 
+            {% for hour in caldate.1.hour_set.all %}
+              <div class="tiny-label">{{ hour.summary }}</div>
+            {% endfor %}
+          </div>
+          {% endif %}
+        </td>
+      {% endfor %}
+      </tr>
+    </tbody>
+  </table>
+
+{% endblock %}

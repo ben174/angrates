@@ -1,0 +1,79 @@
+.caldate { 
+  text-align: right; 
+  font-size: 80%; 
+  font-weight: bold; 
+}
+
+.calendar td { 
+  width: 14%;
+  height: 100px;
+  cursor: pointer;
+}
+
+.calendar th { 
+  text-align: center; 
+}
+
+th { 
+  background-color: #EEE;
+}
+
+td.selected { 
+  background-color: rgb(203, 200, 219)!important;
+}
+
+td.other-month { 
+  background-color: #EEE;
+}
+
+td.today { 
+  background-color: rgb(255, 253, 204);
+}
+
+.assignment-user { 
+  font-size: 9px; 
+  float: right; 
+}
+
+.assignment-entry { 
+  font-size: 9px!important; 
+}
+
+.assignment-group-name { 
+  font-size: 9px!important; 
+  font-weight: bold;
+}
+
+.tiny-label { 
+  font-size: 11px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  width: 100px;
+  overflow: hidden;
+  float: left;
+}
+
+.tiny-label:hover { 
+  text-overflow: inherit; 
+  overflow: visible; 
+}
+
+.calendar-header { 
+  margin-bottom: 20px; 
+}
+
+.next-button { 
+  text-align: right; 
+}
+
+.month-pager { 
+  margin-top: 15px;
+}
+
+.shift-assignment { 
+  display: none; 
+}
+
+fieldset>label { 
+  font-weight: bold; 
+}

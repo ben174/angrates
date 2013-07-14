@@ -13,8 +13,12 @@ signals.post_syncdb.disconnect(
 )
 
 
+weekdays = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 
+        'Saturday', 'Sunday']
 class Episode(models.Model):
     date = models.DateField()
+    def __unicode__( self ):
+        return "%s (%s)" % (self.date, weekdays[self.date.weekday()])
 
 
 class Hour(models.Model):
