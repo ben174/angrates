@@ -104,3 +104,10 @@ fieldset>label {
 .listen-button { 
   margin-top: 4px;
 }
+
+.weekday { 
+  color: #336;
+}
+.box-date { 
+  font-size: 10px; 
+}

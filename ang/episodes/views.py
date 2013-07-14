@@ -20,10 +20,18 @@ def listing(request):
 
 
 def episode(request, year, month, day): 
-    date = datetime.datetime(int(year), int(month), int(day))
-    episode = get_object_or_404(Episode, date=date)
+    this_date = datetime.datetime(int(year), int(month), int(day))
+    next_date = this_date + datetime.timedelta(days=1)
+    prev_date = this_date - datetime.timedelta(days=1)
+    try:
+        episode = Episode.objects.get(date=this_date)
+    except Episode.DoesNotExist:
+        episode = None
     return render(request, 'episodes/episode.html', {
         'episode': episode, 
+        'this_date': this_date, 
+        'next_date': next_date, 
+        'prev_date': prev_date, 
     })
 
 

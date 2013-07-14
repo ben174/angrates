@@ -17,11 +17,20 @@
 {% block episodes %}
   <div class="container">
     {% for hour in hours %}
-      {% ifchanged %}
-        <h3>{{ hour.episode }}</h3>
-      {% endifchanged %}
-      <p><b>H{{ hour.hour_num }}</b> &bull; {{ hour.description }}</p>
-      <a href="{{ hour.download_link }}" class="btn btn-small btn-primary">Listen</a>
+      <div class="clearfix hour-line">
+        <span class="pull-left hour-box">
+          H{{ hour.hour_num }}<br />
+          <div class="listen-button">
+            <a href="{{ hour.download_link }}" class="btn btn-mini btn-inverse listen-button">Listen</a>
+          </div>
+        </span>
+        <div> 
+          <blockquote><p>
+            <a href="/episode/{{ hour.episode.date|date:"Y/m/d" }}">{{ hour.episode.date }}</a>
+            {{ hour.description }}
+          </p></blockquote>
+        </div>
+      </div>
     {% endfor %} 
   </div>
 {% endblock %}

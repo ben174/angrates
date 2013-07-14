@@ -8,7 +8,7 @@
       <div class="row-fluid">
         <h1>Day View</h1>
         <p class="lead">
-          {{ date }}
+          {{ episode.date }}
         </p>
       </div>
     </div>
@@ -16,20 +16,40 @@
 {% endblock %}
 {% block episodes %}
   <div class="container">
-    <h2>{{ episode.date }}</h2>
-    {% for hour in episode.hour_set.all %}
-      <div class="clearfix hour-line">
-        <span class="pull-left hour-box">
-          H{{ hour.hour_num }}<br />
-          <div class="listen-button">
-            <a href="{{ hour.download_link }}" class="btn btn-mini btn-inverse listen-button">Listen</a>
-          </div>
-
-        </span>
-        <div> 
-          <blockquote><p>{{ hour.description }}</p></blockquote>
-        </div>
+    <div class="row calendar-header">
+      <div class="span3">
+        <a href="/episode/{{ prev_date|date:"Y/m/d"}}" class="btn btn-inverse month-pager" id="prevtab">
+          <i class="icon-arrow-left icon-white"></i>
+        </a>
       </div>
-    {% endfor %} 
+      <div class="span6" align="center">
+        <h2><span class="weekday">{{ this_date|date:"l" }}</span>, {{ this_date|date:"F d, Y" }}</h2>
+      </div>
+      <div class="span3 next-button">
+        <a href="/episode/{{ next_date|date:"Y/m/d"}}" class="btn btn-inverse month-pager" id="nexttab">
+          <i class="icon-arrow-right icon-white"></i>
+        </a>
+      </div>
+    </div>
+    {% if not episode %}
+      <div class="well">
+        <h4>No show posted for this date.</h4>
+      </div>
+    {% else %}
+      {% for hour in episode.hour_set.all %}
+        <div class="clearfix hour-line">
+          <span class="pull-left hour-box">
+            H{{ hour.hour_num }}<br />
+            <div class="listen-button">
+              <a href="{{ hour.download_link }}" class="btn btn-mini btn-inverse listen-button">Listen</a>
+            </div>
+
+          </span>
+          <div> 
+            <blockquote><p>{{ hour.description }}</p></blockquote>
+          </div>
+        </div>
+      {% endfor %} 
+    {% endif %}
   </div>
 {% endblock %}
