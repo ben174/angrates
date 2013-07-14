@@ -1,23 +1,25 @@
 from django.db import models
+from django.contrib.auth.models import User
+from django.db.models import signals
+from django.contrib.auth.management import create_superuser
+from django.contrib.auth import models as auth_app
+import datetime
+
+# Prevent interactive question about wanting a superuser created.
+signals.post_syncdb.disconnect(
+    create_superuser,
+    sender=auth_app,
+    dispatch_uid = "django.contrib.auth.management.create_superuser"
+)
+
 
 class Episode(models.Model):
     date = models.DateField()
 
+
 class Hour(models.Model):
-    6AM = 0
-    7AM = 1
-    8AM = 2
-    9AM = 3
-
-    HOUR_CHOICES = (
-        (6AM, '6:00 AM'),
-        (7AM, '7:00 AM'),
-        (8AM, '8:00 AM'),
-        (9AM, '9:00 AM'),
-    )
-
     episode = models.ForeignKey(
-        model='Episode', 
+        'Episode', 
     )
 
     hour_num = models.IntegerField()
@@ -38,4 +40,4 @@ class Hour(models.Model):
         max_length=20,
     )
 
-    download_link = models.URLField( )
+    download_link = models.URLField()
