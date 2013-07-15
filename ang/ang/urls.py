@@ -14,4 +14,5 @@ urlpatterns = patterns('',
     url(r'^$', 'episodes.views.home', name='home'), 
     url(r'^listing/$', 'episodes.views.listing', name='listing'), 
     url(r'^episode/(?P<year>\d+)/(?P<month>\d+)/(?P<day>\d+)$', 'episodes.views.episode', name="episode"),
+    url(r'^today/$', 'episodes.views.today', name='today'), 
 )

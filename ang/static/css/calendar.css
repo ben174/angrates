@@ -88,7 +88,7 @@ fieldset>label {
   border: solid 2px #333; 
   font-weight: bold;
   border-radius: 5px; 
-  background-color: #667;
+  background-color: #766;
   color: #FFF;
   font-size: 40px; 
   padding: 10px;
@@ -106,8 +106,18 @@ fieldset>label {
 }
 
 .weekday { 
-  color: #336;
+  color: #633;
 }
+
 .box-date { 
   font-size: 10px; 
+}
+
+.speaker-icon { 
+  margin-left: 20px; 
+}
+
+.logo-image { 
+  width: 140px; 
+  margin-right: 20px; 
 }

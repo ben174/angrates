@@ -19,6 +19,12 @@ def listing(request):
     })
 
 
+
+def today(request): 
+    today = datetime.datetime.now()
+    return HttpResponseRedirect(reverse('episode', args=[today.year, today.month, today.day]))
+
+
 def episode(request, year, month, day): 
     this_date = datetime.datetime(int(year), int(month), int(day))
     next_date = this_date + datetime.timedelta(days=1)
