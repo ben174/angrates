@@ -47,25 +47,28 @@ def create_hour(entry):
     hour_num = int(hour_num.replace('H',''))
     episode, _ = Episode.objects.get_or_create(date=date)
     
-    hour = Hour(episode=episode, hour_num=hour_num)
-    hour.description = entry.summary
-    hour.download_link = entry.link
-    hour.summary = entry.content[0]['value']
-    hour.duration = entry.itunes_duration
-    hour.title = entry.title
-    
-
-    hour.save()
-    
-    print 'Hour create. Date: %s, Hour: %s' % (str(date), str(hour))
+    created, hour = Hour.objects.get_or_create(episode=episode, hour_num=hour_num)
+    if not created: 
+        hour.description = entry.summary
+        hour.download_link = entry.link
+        hour.summary = entry.content[0]['value']
+        hour.duration = entry.itunes_duration
+        hour.title = entry.title
+        hour.save()
+        print 'Hour create. Date: %s, Hour: %s' % (str(date), str(hour))
+    else: 
+        print 'Hour already existed. Skipping.'
     
 
 def create_admin():
     print "Creating user: admin"
-    u = User.objects.create_user('admin', 'admin@admin.com', 'changeme')
-    u.is_staff = True
-    u.is_superuser = True
-    u.save()
+    try: 
+        u = User.objects.create_user('admin', 'admin@admin.com', 'changeme')
+        u.is_staff = True
+        u.is_superuser = True
+        u.save()
+    except: 
+        print "Error creating admin."
 
 
 if __name__ == '__main__': 
