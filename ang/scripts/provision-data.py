@@ -47,7 +47,7 @@ def create_hour(entry):
     hour_num = int(hour_num.replace('H',''))
     episode, _ = Episode.objects.get_or_create(date=date)
     
-    created, hour = Hour.objects.get_or_create(episode=episode, hour_num=hour_num)
+    hour, created = Hour.objects.get_or_create(episode=episode, hour_num=hour_num)
     if created: 
         hour.description = entry.summary
         hour.download_link = entry.link
