@@ -13,8 +13,7 @@ A place for people to collaborate and rate episodes of Armstrong and Getty.
 **Day View** - View a single day. Defaults to current day, but has paging page through days.
 
 ###Some ideas:
-User Registration
-Commenting
-Episode Rating
-Episode Tagging
-Please provide feedback with any ideas you have, and I'll go ahead announce it on Facebook sometime this week. I hope it's useful!
+* User Registration
+* Commenting
+* Episode Rating
+* Episode Tagging
