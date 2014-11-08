@@ -29,7 +29,7 @@ class Hour(models.Model):
     hour_num = models.IntegerField()
 
     title = models.CharField(
-        max_length=50, 
+        max_length=200, 
     )
 
     description = models.CharField(
@@ -37,7 +37,7 @@ class Hour(models.Model):
     )
 
     summary = models.CharField(
-        max_length=200, 
+        max_length=500, 
     )
 
     duration = models.CharField(
