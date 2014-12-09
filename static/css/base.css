@@ -1,0 +1,29 @@
+body {
+  padding-top: 70px;
+}
+
+#calendar td {
+  width: 20%;
+  border: solid 1px #000;
+  min-height: 200px;
+  height: 150px;
+  min-width: 215px;
+}
+.caldate {
+  float: right;
+  font-size: 80%;
+  font-weight: bold;
+
+}
+.tiny-label {
+  font-size: 13px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  width: 190px;
+  overflow: hidden;
+  float: left;
+}
+.logo-image {
+  width: 110px;
+  margin-right: 26px;
+}
