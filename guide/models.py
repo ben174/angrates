@@ -112,11 +112,11 @@ class Clip(models.Model):
         video_key = self.youtube_key
         if not video_key:
             return None
-        ret = 'http://www.youtube.com/embed/%s' % video_key
+        ret = 'http://www.youtube.com/embed/%s?autoplay=true' % video_key
         if '#' in self.link:
             time = self.link.split('#')[1]
             time = time.replace('t=', 'start=')
-            ret += '?' + time
+            ret += '&' + time + '&autoplay=true'
         return ret
 
     @property
