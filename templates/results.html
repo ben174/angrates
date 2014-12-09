@@ -4,10 +4,25 @@
 {% block scripts %}
 {% endblock %}
 {% block content %}
-{% for clip in clips %}
-{{ clip }}<br />
-{% endfor %}
-{% for hour in hours %}
-{{ hour }} - {{ hour.description }}<br />
-{% endfor %}
+{% if clips %}
+  <h1>Clips</h1>
+  <ul>
+  {% for clip in clips %}
+  <li><a href="/clips/{{ clip.key }}">{{ clip.name }}</a> - {{ clip.description }}</li>
+  {% endfor %}
+  </ul>
+{% else %}
+  <blockquote>No clips found.</blockquote>
+{% endif %}
+
+{% if hours %}
+  <h1>Episodes</h1>
+  <ul>
+  {% for hour in hours %}
+  <li><a href="/episode/{{ hour.timestamp|date:"Y/m/d" }}">{{ hour }}</a> - {{ hour.description }}</li>
+  {% endfor %}
+</ul>
+{% else %}
+  <blockquote>No episodes found.</blockquote>
+{% endif %}
 {% endblock %}
