@@ -4,6 +4,7 @@ import datetime
 import calendar
 from guide.models import Episode, Hour, Clip
 import json
+from util import search as search_util
 
 
 def listing(request):
@@ -151,5 +152,14 @@ def clip(request, key):
     })
 
 def search(request):
-    query = request.GET.get('q', None)
-    Clip.objects.filter()
+    query_string = request.GET.get('q', None)
+    clip_query = search_util.get_query(query_string, ['name', 'description'])
+    hour_query = search_util.get_query(query_string, ['description'])
+    clips = Clip.objects.filter(clip_query)
+    hours = Hour.objects.filter(hour_query)
+    return render(request, 'results.html', {
+        'query': query_string,
+        'clips': clips,
+        'hours': hours,
+    })
+
