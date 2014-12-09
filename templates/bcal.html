@@ -5,33 +5,6 @@
 <script type="text/javascript" src="{% static "bower_components/underscore/underscore.js" %}"></script>
 {% endblock %}
 {% block content %}
-<style>
-#calendar td {
-  width: 20%;
-  border: solid 1px #000;
-  min-height: 200px;
-  height: 150px;
-  min-width: 215px;
-}
-.caldate {
-  float: right;
-  font-size: 80%;
-  font-weight: bold;
-
-}
-.tiny-label {
-  font-size: 13px;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  width: 190px;
-  overflow: hidden;
-  float: left;
-}
-.logo-image {
-  width: 110px;
-  margin-right: 26px;
-}
-</style>
 <div class="hero-row hero-condensed">
   <div class="container">
     <div class="row-fluid">
@@ -43,28 +16,33 @@
     </div>
   </div>
 </div>
-<div class="well">
-  <p><b>Welcome to the new Armstrong &amp Getty Bingo Episode Guide version 2.0!</b></p>
-  <p>I've rewritten the site from the ground up, and tried to re-implement all the old features.
-  If I've missed anything, please <a href="mailto:bfriedland174@yahoo.com">let me know</a>!</p>
-  <p>Be sure to check out the <a href="/clips">Clip Gallery</a> for a collection of all your favorite
-  show clips!</p>
-  <p><b>KFTC<i>!</i></b></p>
-  <p>-Ben in San Jose<br />
-  <i>You're HUGE in the 'ho!</i></p>
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h3 class="panel-title">Bingo 2.0 Is Here!</h3>
+  </div>
+  <div class="panel-body">
+    <h4>Welcome to the new Armstrong &amp Getty Bingo Episode Guide version 2.0!</h4>
+    <p>I've rewritten the site from the ground up, and tried to re-implement all the old features.
+    If I've missed anything, please <a href="mailto:bfriedland174@yahoo.com">let me know</a>!</p>
+    <p>Be sure to check out the <a href="/clips">Clip Gallery</a> for a collection of all your favorite
+    show clips!</p>
+    <p><b>KFTC<i>!</i></b></p>
+    <p>-Ben in San Jose<br />
+    <i>You're HUGE in the 'ho!</i></p>
+  </div>
 </div>
 <div class="hero-row hero-condensed">
   <div class="row calendar-header">
-    <div class="span3">
-      <a href="/calendar/{{ prev_month_date.year }}/{{ prev_month_date.month }}" class="btn btn-inverse month-pager" id="prevtab">
+    <div class="col-lg-3">
+      <a href="/calendar/{{ prev_month_date.year }}/{{ prev_month_date.month }}" class="btn btn-primary btn-sm" id="prevtab">
         <i class="icon-arrow-left icon-white"></i> {{ prev_month_date|date:"F, Y" }}
       </a>
     </div>
-    <div class="span6">
+    <div class="col-lg-6">
       <h1 style="float: none; text-align: center;">{{ month_date|date:"F, Y" }}</h1>
     </div>
-    <div class="span3 next-button">
-      <a href="/calendar/{{ next_month_date.year }}/{{ next_month_date.month }}" class="btn btn-inverse month-pager" id="nexttab">
+    <div class="col-lg-3 next-button">
+      <a href="/calendar/{{ next_month_date.year }}/{{ next_month_date.month }}" class="btn btn-primary btn-sm pull-right" id="nexttab">
         {{ next_month_date|date:"F, Y" }} <i class="icon-arrow-right icon-white"></i>
       </a>
     </div>
