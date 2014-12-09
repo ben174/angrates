@@ -4,5 +4,10 @@
 {% block scripts %}
 {% endblock %}
 {% block content %}
-test
+{% for clip in clips %}
+{{ clip }}<br />
+{% endfor %}
+{% for hour in hours %}
+{{ hour }} - {{ hour.description }}<br />
+{% endfor %}
 {% endblock %}
