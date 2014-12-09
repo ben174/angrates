@@ -11,3 +11,4 @@ env
 *.swo
 *.sqlite3
 venv
+ang/custom_settings.py
