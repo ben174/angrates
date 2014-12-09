@@ -4,8 +4,9 @@
 {% block scripts %}
 {% endblock %}
 {% block content %}
+<h1>Search Results</h2>
 {% if clips %}
-  <h1>Clips</h1>
+  <h2>Clips</h2>
   <ul>
   {% for clip in clips %}
   <li><a href="/clips/{{ clip.key }}">{{ clip.name }}</a> - {{ clip.description }}</li>
@@ -16,7 +17,7 @@
 {% endif %}
 
 {% if hours %}
-  <h1>Episodes</h1>
+  <h2>Episodes</h2>
   <ul>
   {% for hour in hours %}
   <li><a href="/episode/{{ hour.timestamp|date:"Y/m/d" }}">{{ hour }}</a> - {{ hour.description }}</li>

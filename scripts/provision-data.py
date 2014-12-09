@@ -44,12 +44,19 @@ def load_clips():
         print row
         print 'Clip: %s' % row[0]
         key = row[0]
-        if key:
+        if key and key != 'Unique Key':
             clip, created = Clip.objects.get_or_create(key=key)
-            clip.name = row[1]
-            clip.description = row[2]
-            clip.link = row[3]
-            clip.save()
+            if created:
+                print 'Created new clip: %s' % key
+            name = row[1]
+            description = row[2]
+            link = row[3]
+            if clip.name != name or clip.description != description or clip.link != link:
+                print 'Updating clip: %s' % key
+                clip.name = row[1]
+                clip.description = row[2]
+                clip.link = row[3]
+                clip.save()
 
 
 

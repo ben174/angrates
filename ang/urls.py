@@ -3,9 +3,8 @@ from django.contrib import admin
 
 urlpatterns = patterns('',
     url(r'^admin/', include(admin.site.urls)),
-    url(r'^calendar/(?P<year>\d+)/(?P<month>\d+)$', 'guide.views.home', name="home"),
-    url(r'^$', 'guide.views.home', name='home'), 
-    url(r'^bcal$', 'guide.views.bcal', name='bcal'), 
+    url(r'^calendar/(?P<year>\d+)/(?P<month>\d+)$', 'guide.views.bcal', name="bcal"),
+    url(r'^$', 'guide.views.bcal', name='bcal'), 
     url(r'^listing/$', 'guide.views.listing', name='listing'), 
     url(r'^episode/(?P<year>\d+)/(?P<month>\d+)/(?P<day>\d+)$', 'guide.views.episode', name="episode"),
     url(r'^today/$', 'guide.views.today', name='today'), 
