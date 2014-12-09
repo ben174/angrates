@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block title %} Episode Calendar {% endblock %}
+{% block scripts %}
+<script type="text/javascript" src="{% static "bower_components/underscore/underscore.js" %}"></script>
+{% endblock %}
+{% block content %}
+<style>
+#calendar td {
+  width: 20%;
+  border: solid 1px #000;
+  min-height: 200px;
+  min-width: 215px;
+}
+.day-label {
+  float: right;
+  font-size: 80%;
+  font-weight: bold;
+
+}
+.tiny-label {
+font-size: 11px;
+text-overflow: ellipsis;
+white-space: nowrap;
+width: 190px;
+overflow: hidden;
+float: left;
+}
+</style>
+
+<table width="100%" class="table table-bordered table-condensed calendar" id="calendar">
+<tr>
+{% for date in dates %}
+  <td width="20%" valign="top">
+    <span class="day-label">{{ date.0.day }}</span>
+    {% for hour in date.1.hour_set.all %}
+      <div class="tiny-label">{{ hour.description }}</div>
+    {% endfor %}
+  </td>
+  {% if forloop.counter|divisibleby:5 %}
+  </tr><tr>
+  {% endif %}
+{% endfor %}
+</tr></table>
+{% endblock %}

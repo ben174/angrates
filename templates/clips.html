@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block title %} Episode Calendar {% endblock %}
+{% block scripts %}
+{% endblock %}
+{% block content %}
+<div class="jumbotron">
+  <h1>Clip Gallery</h1>
+  <p>This is a publicly editable clip gallery. If anything is missing, or you have anything to add, please feel free to <a href="https://docs.google.com/spreadsheets/d/1Gq8ORD1x6DuzkxzAgEblrMUOLsZ3I4OvdWtkl-Vypj8/edit#gid=0">edit the source spreadsheet</a>. 
+    This gallery will automatically pull the updated data every ten minutes.
+  </p>
+</div>
+<table class="table table-striped">
+{% for clip in clips %}
+  <tr>
+    <td>
+      {% if clip.thumbnail_url %}
+        <img src="{{ clip.thumbnail_url }}" class="img-thumbnail" width="64" height="64">
+      {% else %}
+        <img src="{% static 'images/microphone-icon.png' %}" class="img-thumbnail" width="64" height="64">
+
+      {% endif %}
+    </td>
+    <td>
+      <a href="/clips/{{ clip.key }}">{{ clip.name }}</a><br />
+      <!--
+      {% if clip.description %}
+        {{ clip.description }}
+      {% endif %}
+      -->
+
+    </td>
+  </tr>
+{% endfor %}
+</table>
+{% endblock %}
