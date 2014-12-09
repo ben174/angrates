@@ -9,3 +9,5 @@ env
 *.swp
 
 *.swo
+*.sqlite3
+venv
