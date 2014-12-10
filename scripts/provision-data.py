@@ -115,10 +115,18 @@ def read_new_rss():
                 print hour.summary
                 hour.duration = entry.itunes_duration
                 hour.title = entry.title
-                hour.save()
+                try:
+                    hour.save()
+                except:
+                    print 'ERROR SAVING HOUR: '
+                    print hour
             else:
                 hour.link_650 = entry.link
-                hour.save()
+                try:
+                    hour.save()
+                except:
+                    print 'ERROR SAVING HOUR: '
+                    print hour
 
 
 def create_hour(entry):
