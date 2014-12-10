@@ -27,11 +27,9 @@ import csv
 
 
 def main():
-    '''
     create_admin()
     read_rss()
     read_new_rss()
-    '''
     load_clips()
 
 
