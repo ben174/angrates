@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 {% load staticfiles %}
-{% block title %} Episode Calendar {% endblock %}
+{% block title %} Clip Gallery - {{ clip.key }} {% endblock %}
 {% block scripts %}
 {% endblock %}
 {% block content %}
@@ -28,6 +28,6 @@
     <p>This is a publicly editable clip gallery. If anything is missing, or you have anything to add, please feel free to edit the source spreadsheet. 
       This gallery will automatically pull the updated data every ten minutes.
     </p>
-    <p><a href="https://docs.google.com/spreadsheets/d/1Gq8ORD1x6DuzkxzAgEblrMUOLsZ3I4OvdWtkl-Vypj8/edit#gid=0" class="btn btn-primary btn-lg" role="button">Edit the Spreadsheet »</a></p>
+    <p><a href="https://docs.google.com/spreadsheets/d/1Gq8ORD1x6DuzkxzAgEblrMUOLsZ3I4OvdWtkl-Vypj8/edit#gid=0" class="btn btn-primary" role="button">Edit the Spreadsheet »</a></p>
   </div>
 {% endblock %}
