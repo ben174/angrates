@@ -1,14 +1,11 @@
 env
 *.pyc
 *.un~
-
 *.db
-
 .DS_Store
-
 *.swp
-
 *.swo
 *.sqlite3
 venv
+staticfiles
 ang/custom_settings.py
