@@ -15,14 +15,16 @@
 {% for clip in clips %}
   <tr>
     <td>
+      <a href="/clips/{{ clip.key }}">
       {% if clip.thumbnail_url %}
         <img src="{{ clip.thumbnail_url }}" class="img-thumbnail" width="64" height="64">
       {% else %}
         <img src="{% static 'images/microphone-icon.png' %}" class="img-thumbnail" width="64" height="64">
       {% endif %}
+    </a>
     </td>
     <td>
-      <a href="/clips/{{ clip.key }}">{{ clip.name }}</a><br />
+      <a href="/clips/{{ clip.key }}">{{ clip.name }}</a>
       <!--
       {% if clip.description %}
         {{ clip.description }}
