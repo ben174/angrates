@@ -27,3 +27,13 @@ body {
   width: 110px;
   margin-right: 26px;
 }
+.clip-thumbnail {
+  width: 160px;
+  margin-right: 10px;
+}
+
+.clip-box {
+  margin-bottom: 30px;
+  min-height: 100px;
+
+}

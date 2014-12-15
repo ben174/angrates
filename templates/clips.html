@@ -11,28 +11,25 @@
     This gallery will automatically pull the updated data every ten minutes.
   </p>
 </div>
-<table class="table table-striped">
-{% for clip in clips %}
-  <tr>
-    <td>
+<div class="container">
+  <div class="row">
+    {% for clip in clips %}
+    <div class="col-sm-6 clip-box clearfix">
       <a href="/clips/{{ clip.key }}">
       {% if clip.thumbnail_url %}
-        <img src="{{ clip.thumbnail_url }}" class="img-thumbnail" width="64" height="64">
+        <img src="{{ clip.thumbnail_url }}" class="img-thumbnail img-responsive pull-left clip-thumbnail">
       {% else %}
-        <img src="{% static 'images/microphone-icon.png' %}" class="img-thumbnail" width="64" height="64">
+        <img src="{% static 'images/microphone-icon.png' %}" class="img-thumbnail img-responsive pull-left clip-thumbnail">
       {% endif %}
-    </a>
-    </td>
-    <td>
-      <a href="/clips/{{ clip.key }}">{{ clip.name }}</a>
-      <!--
-      {% if clip.description %}
-        {{ clip.description }}
-      {% endif %}
-      -->
-
-    </td>
-  </tr>
-{% endfor %}
-</table>
+      </a>
+      <div>
+        <h4><a href="/clips/{{ clip.key }}">{{ clip.name }}</a></h4>
+        {% if clip.description %}
+          {{ clip.description }}
+        {% endif %}
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</div>
 {% endblock %}

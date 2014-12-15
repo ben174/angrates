@@ -10,17 +10,16 @@
     <li class="active">{{ clip.key }}</li>
   </ol>
   <h1>{{ clip.name }}</h1>
-  <blockquote>
-    {{ clip.description }}
-    {% if clip.link %}
-    <footer><a href="{{ clip.link }}" target="_blank">{{ clip.link }}</a></footer>
-    {% endif %}
-  </blockquote>
+  <div class="well">
+    <h3>
+      {{ clip.description }}
+    </h3>
+  </div>
   {% if clip.embed_link %}
   <iframe width="560" height="315" class="embed-responsive-item" src="{{ clip.embed_link }}" allowfullscreen></iframe><br />
   {% else %}
   <h1>:-(</h1>
-  <h3>No clip available for this video. If you know of one, please add it to the spreadsheet!</h3>
+  <h3>No clip available for this video. If you know of one, please add it to the spreadsheet.</h3>
   {% endif %}
   <a href="{{ clip.link }}" target="_blank">{{ clip.link }}</a><br /><br />
   <div class="jumbotron">
