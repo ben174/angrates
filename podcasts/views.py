@@ -6,7 +6,7 @@ from podcasts.models import Hour
 
 
 class HourMonthArchiveView(MonthArchiveView):
-    queryset = Hour.objects.all()
+    queryset = Hour.objects.filter(feed='650')
     date_field = "pub_date"
     allow_future = True
     month_format = '%m'
