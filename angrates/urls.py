@@ -18,3 +18,5 @@ url(r'^(?P<year>[0-9]{4})/(?P<month>[0-9]+)/$',
     HourMonthArchiveView.as_view(month_format='%m'),
     name="archive_month_numeric"),
 '''
+
+

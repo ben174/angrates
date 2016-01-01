@@ -1,9 +1,8 @@
 import datetime
 from django import template
 
-from podcasts.models import Hour
-
 register = template.Library()
+
 
 @register.simple_tag
 def current_time(format_string):
@@ -13,9 +12,9 @@ def current_time(format_string):
 @register.simple_tag
 def hours_for(date, object_list):
     return object_list.filter(pub_date__year=date.year,
-                         pub_date__month=date.month,
-                         pub_date__day=date.day,
-                               feed='650')
+                              pub_date__month=date.month,
+                              pub_date__day=date.day,
+                              )
 
 
 def cut(value, arg):
