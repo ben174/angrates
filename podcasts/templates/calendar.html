@@ -1,23 +1,4 @@
 {% load hours %}
-
-
-<p>
-    {% if previous_month %}
-        Previous Month: <a href="{% url 'archive_month' month=previous_month.month year=previous_month.year %}">{{ previous_month|date:"F Y" }}</a>
-    {% endif %}
-    {% if next_month %}
-        Next Month: <a href="{% url 'archive_month' month=next_month.month year=next_month.year %}">{{ next_month|date:"F Y" }}</a>
-    {% endif %}
-</p>
-
-
-
-
-
-
-
-
-
 <style>
     @media (min-width: 0px) {
         .five-cols .col-xs-1,
@@ -103,9 +84,8 @@
         }
     }
 
-    .calendar>.date {
+    .date {
         border: solid 1px #000;
-        min-height: 100px;
     }
 
     .date-num {
@@ -155,7 +135,7 @@
             {% if d.weekday != 5 and d.weekday != 6 %}
                 <div class="col-xs-1 date weekday-{{ d.weekday }}">
                     <div class="date-num">{{ d.day }}</div>
-                   {% hours_for d object_list as hours %}
+                   {% hours_for d as hours %}
                     {% for hour in hours %}
                         <div class="tiny-label">{{ hour }}</div>
                     {% endfor %}
@@ -164,7 +144,3 @@
         {% endfor %}
     </div>
 </div>
-
-
-
-
