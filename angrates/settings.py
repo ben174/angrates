@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'podcasts',
+    'debug_toolbar',
 ]
 
 MIDDLEWARE_CLASSES = [
