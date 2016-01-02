@@ -1,8 +1,14 @@
+import StringIO
+import csv
 import re
+import string
 import xml.etree.ElementTree as ET
 
 import datetime
-from podcasts.models import Hour
+
+import requests
+
+from podcasts.models import Hour, Clip
 
 
 class LogLevels:
@@ -105,3 +111,33 @@ class FeedScraper:
             return datetime.datetime(y, m, d, h, 0, 0)
         except:
             return None
+
+
+class ClipScraper:
+    def load_clips(self):
+        response = requests.get('https://docs.google.com/spreadsheet/ccc?key=1Gq8ORD1x6DuzkxzAgEblrMUOLsZ3I4OvdWtkl-Vypj8&output=csv')
+        if response.status_code != 200:
+            yield LogLevels.ERROR, 'Google Docs returned a bad status code: ' + str(response.status_code)
+        f = StringIO.StringIO(response.content)
+        reader = csv.reader(f)
+        for row in reader:
+            row = [filter(lambda x: x in string.printable, c) for c in row]
+            print row
+            key = row[0]
+            if key and key != 'Unique Key':
+                clip, created = Clip.objects.get_or_create(key=key)
+                if created:
+                    yield LogLevels.SUCCESS, 'Created new clip: %s' % key
+                name = row[1]
+                description = row[2]
+                link = row[3]
+                # strip unicode characters
+                name = name.decode('unicode_escape').encode('ascii','ignore')
+                description = description.decode('unicode_escape').encode('ascii','ignore')
+                link = link.decode('unicode_escape').encode('ascii','ignore')
+                if clip.name != name or clip.description != description or clip.link != link:
+                    yield LogLevels.SUCCESS, 'Updating clip: %s' % key
+                    clip.name = row[1]
+                    clip.description = row[2]
+                    clip.link = row[3]
+                    clip.save()

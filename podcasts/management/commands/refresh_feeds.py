@@ -4,7 +4,7 @@ from podcasts.util.scraper import FeedScraper, LogLevels
 
 
 class Command(BaseCommand):
-    help = 'Closes the specified poll for voting'
+    help = 'Scrapes the podcast feeds and loads each hour into the db.'
 
     def add_arguments(self, parser):
         parser.add_argument('--feed',

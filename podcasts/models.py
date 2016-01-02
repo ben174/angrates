@@ -1,10 +1,9 @@
 from __future__ import unicode_literals
 
 import re
+import urlparse
 
 from django.db import models
-import datetime
-
 
 
 class Hour(models.Model):
@@ -43,14 +42,6 @@ class Hour(models.Model):
         blank=True,
     )
 
-    '''
-    @property
-    def milliseconds(self):
-        epoch = datetime.datetime.utcfromtimestamp(0)
-        delta = self.timestamp - epoch
-        return int(delta.total_seconds()) * 1000
-    '''
-
     class Meta:
         ordering = ['pub_date']
 
@@ -69,7 +60,7 @@ class Hour(models.Model):
         self.title = Hour._clean_title(self.title)
         super(Hour, self).save(*args, **kwargs)
 
-    def __unicode__( self ):
+    def __unicode__(self):
         title = self.title
         if len(title) > 60:
             title = title[:57] + '...'
@@ -80,3 +71,67 @@ class Hour(models.Model):
             self.feed,
             title
         )
+
+
+class Clip(models.Model):
+    name = models.CharField(
+        max_length=200,
+    )
+
+    description = models.CharField(
+        max_length=2000,
+        null=True,
+        blank=True,
+    )
+
+    link = models.URLField(
+        null=True,
+        blank=True,
+    )
+
+    key = models.CharField(
+        max_length=100,
+        null=True,
+        blank=True,
+    )
+
+    created_date = models.DateTimeField(auto_now_add=True)
+    modified_date = models.DateTimeField(auto_now=True)
+
+    @property
+    def embed_link(self):
+        if not self.link:
+            return None
+        video_key = self.youtube_key
+        if not video_key:
+            return None
+        ret = 'http://www.youtube.com/embed/%s?autoplay=true' % video_key
+        if '#' in self.link:
+            time = self.link.split('#')[1]
+            time = time.replace('t=', 'start=')
+            ret += '&' + time + '&autoplay=true'
+        return ret
+
+    @property
+    def youtube_key(self):
+        video_key = None
+        query = urlparse.urlparse(self.link.strip())
+        p = urlparse.parse_qs(query.query)
+        if query.hostname == 'youtu.be':
+            video_key = query.path[1:]
+        if query.hostname in ('www.youtube.com', 'youtube.com'):
+            if query.path == '/watch':
+                video_key = p['v'][0]
+            if query.path[:7] == '/embed/':
+                video_key = query.path.split('/')[2]
+            if query.path[:3] == '/v/':
+                video_key = query.path.split('/')[2]
+        return video_key
+
+    @property
+    def thumbnail_url(self):
+        if self.youtube_key:
+            return 'http://img.youtube.com/vi/%s/0.jpg' % self.youtube_key
+
+    def __unicode__(self):
+        return self.key

@@ -1,6 +1,5 @@
 from django.contrib import admin
 
-# Register your models here.
-from podcasts.models import Hour
+from podcasts.models import Hour, Clip
 
-admin.site.register(Hour)
+admin.site.register([Hour, Clip])
