@@ -31,7 +31,9 @@ class Command(BaseCommand):
         for item in items:
             media_title = item.find('mediaTitle').text
             description = item.find('description').text
+            description = re.sub( '\s+', ' ', description ).strip()
             title = item.find('title').text
+            title = re.sub( '\s+', ' ', title ).strip()
             url = item.find('enclosure').attrib['url']
             dt = self._get_650_date(media_title)
             if not dt:
@@ -39,8 +41,6 @@ class Command(BaseCommand):
                 continue
             hour, created = Hour.objects.get_or_create(pub_date=dt, feed='650')
             # strips extra whitespace
-            description = re.sub( '\s+', ' ', description ).strip()
-            title = re.sub( '\s+', ' ', title ).strip()
             hour.description = description
             hour.title = title
             hour.link = url
@@ -59,9 +59,12 @@ class Command(BaseCommand):
         for item in items:
             media_title = item.find('mediaTitle').text
             description = item.find('description').text
-            description = re.sub( '\s+', ' ', description ).strip()
+            description = re.sub( '\s+', ' ', description).strip()
+            summary = item.find('{http://www.itunes.com/dtds/podcast-1.0.dtd}summary').text
+            summary = re.sub( '\s+', ' ', summary).strip()
             pub_date = item.find('pubDate').text
             title = item.find('title').text
+            title = re.sub( '\s+', ' ', title ).strip()
             url = item.find('enclosure').attrib['url']
             dt = self._get_910_date(pub_date, title)
             if not dt:
@@ -69,7 +72,7 @@ class Command(BaseCommand):
                 continue
             hour, created = Hour.objects.get_or_create(pub_date=dt, feed="910")
             hour.description = description
-            hour.title = title
+            hour.title = summary
             hour.link = url
             hour.save()
             if created:

@@ -5,26 +5,26 @@
     .five-cols .col-lg-1 {
         width: 100%;
     }
-}
-
-@media (min-width: 0px) {
     .week-header {
         display: none;
     }
 }
 
 @media (min-width: 768px) {
+    .five-cols .col-xs-1,
+    .five-cols .col-md-1,
+    .five-cols .col-sm-1,
+    .five-cols .col-lg-1 {
+        width: 20%;
+    }
     .week-header {
         display: block;
     }
-}
-
-@media (min-width: 768px) {
-    .five-cols .col-xs-1,
-    .five-cols .col-md-1,
-    .five-cols .col-sm-1,
-    .five-cols .col-lg-1 {
-        width: 20%;
+    .calendar > .date {
+        min-height: 100px;
+    }
+    .month-header {
+        display: none;
     }
 }
 
@@ -43,57 +43,51 @@
     .five-cols .col-sm-1,
     .five-cols .col-lg-1 {
         width: 20%;
-    }
-}
-
-@media (min-width: 0px) {
-    .seven-cols .col-xs-1,
-    .seven-cols .col-md-1,
-    .seven-cols .col-sm-1,
-    .seven-cols .col-lg-1 {
-        width: 100%;
-    }
-}
-
-@media (min-width: 768px) {
-    .seven-cols .col-xs-1,
-    .seven-cols .col-md-1,
-    .seven-cols .col-sm-1,
-    .seven-cols .col-lg-1 {
-        width: 14.285714285714285714285714285714%;
-    }
-}
-
-@media (min-width: 992px) {
-    .seven-cols .col-xs-1,
-    .seven-cols .col-md-1,
-    .seven-cols .col-sm-1,
-    .seven-cols .col-lg-1 {
-        width: 14.285714285714285714285714285714%;
-    }
-}
-
-@media (min-width: 1200px) {
-    .seven-cols .col-xs-1,
-    .seven-cols .col-md-1,
-    .seven-cols .col-sm-1,
-    .seven-cols .col-lg-1 {
-        width: 14.285714285714285714285714285714%;
     }
 }
 
 .calendar > .date {
-    border: solid 1px #000;
-    min-height: 100px;
+    border: solid 1px #ddd;
+    border-left: none;
+    border-bottom:none;
+}
+.calendar {
+    border-bottom: solid 1px #ddd;
+}
+.calendar > .date.weekday-0 {
+    border-left: solid 1px #ddd;
 }
 
 .date-num {
     float: right;
 }
 
-.tiny-label {
+a.tiny-label {
     font-size: 11px;
     text-overflow: ellipsis;
     white-space: nowrap;
     overflow: hidden;
+    display: block
+}
+
+.header-banner div {
+    text-align: center;
+}
+
+.week-header {
+    font-weight: bold;
+    text-align:center;
+    text-transform: uppercase;
+    font-size: 10px;
+    color: #777;
+    margin-bottom: 5px;
+    margin-top: 10px;
+}
+
+div.date.month-header {
+    margin-top: 20px;
+    font-weight: bold;
+    text-transform: uppercase;
+    color: #777;
+    border: none;
 }
