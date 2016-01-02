@@ -58,3 +58,8 @@
     font-size: 75%;
     margin-left: 15px;
 }
+
+.breadcrumb {
+    background-color: #EEE;
+    margin-top: -20px;
+}

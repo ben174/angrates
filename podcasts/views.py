@@ -119,5 +119,5 @@ def do_refresh(request, scraper):
 def clips(request, key=None):
     if key:
         clip = get_object_or_404(Clip, key=key)
-        return render('clips.html', {'clip': clip})
+        return render(request, 'clip.html', {'clip': clip})
     return render(request, 'clips.html', {'clips': Clip.objects.all()})
