@@ -3,6 +3,12 @@
 {% block posthead %}
     <link rel="stylesheet" href="{% static 'css/day.css' %}">
 {% endblock %}
+{% block breadcrumbs %}
+    <ol class="breadcrumb">
+        <li><a href="/">Home</a></li>
+        <li class="active">Clip Gallery</li>
+    </ol>
+{% endblock %}
 {% block content %}
     <div class="jumbotron">
         <h1>Clip Gallery</h1>

@@ -3,6 +3,13 @@
 {% block posthead %}
     <link rel="stylesheet" href="{% static 'css/day.css' %}">
 {% endblock %}
+{% block breadcrumbs %}
+    <ol class="breadcrumb">
+        <li><a href="/">Calendar</a></li>
+        <li><a href="{% url 'archive_month' year=day.year month=day.month feed=feed %}">{{ day|date:"F" }}</a></li>
+        <li class="active">Clip Gallery</li>
+    </ol>
+{% endblock %}
 {% block content %}
     <div class="container">
         <h1>{{ day|date:"F d, Y" }}</h1>
@@ -26,7 +33,7 @@
                 {% if next_month %}
                     <a href="{% url 'archive_day' feed=feed month=next_day.month day=next_day.day year=next_day.year %}" class="btn btn-xs btn-info">
                         <span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span>
-                        {{ next_month|date:"F d, Y" }}
+                        {{ next_day|date:"F d, Y" }}
                     </a>
                 {% endif %}
             </div>
