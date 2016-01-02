@@ -48,6 +48,12 @@
     margin-right: 0px; }
 
 .breadcrumb {
-  background-color: inherit; }
+  background-color: inherit;
+  margin-left: 108px; }
+
+.navbar-brand img {
+  width: 100px;
+  float: left;
+  margin-top: -10px; }
 
 /*# sourceMappingURL=base.css.map */
