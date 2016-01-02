@@ -62,10 +62,21 @@ class Hour(models.Model):
         title = re.sub(r"(?i)^(?i)[0-9]\s?[AP]M[\s\-]+(.*)$", "\g<1>", title)
         return title
 
+    def get_alternate_feeds(self):
+        return Hour.objects.filter(pub_date=self.pub_date).exclude(pk=self.pk)
+
     def save(self, *args, **kwargs):
         self.title = Hour._clean_title(self.title)
         super(Hour, self).save(*args, **kwargs)
 
     def __unicode__( self ):
-        return Hour._clean_title(self.title)
-
+        title = self.title
+        if len(title) > 60:
+            title = title[:57] + '...'
+        return '{}-{}-{} - {} - {}'.format(
+            self.pub_date.year,
+            self.pub_date.month,
+            self.pub_date.day,
+            self.feed,
+            title
+        )
