@@ -67,3 +67,7 @@ body {
     background-color: #EEE;
     margin-top: -20px;
 }
+
+.breadcrumb-form {
+    margin-top: -8px;
+}

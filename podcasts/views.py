@@ -6,6 +6,7 @@ from django.http import HttpResponse
 from django.shortcuts import render, get_object_or_404
 from django.views.generic.dates import MonthArchiveView, DayArchiveView
 from podcasts.models import Hour, Clip
+from podcasts.util import search as search_util
 from podcasts.util.scraper import FeedScraper, ClipScraper
 
 
@@ -82,9 +83,11 @@ class HourDayArchiveView(DayArchiveView):
         context = super(HourDayArchiveView, self).get_context_data(**kwargs)
         hcal = calendar.HTMLCalendar(6)
         iter = hcal.itermonthdates(int(self.get_year()), int(self.get_month()))
+        today = datetime.date.today()
         context.update({
             'iter': iter,
             'feed': self.kwargs['feed'],
+            'today': today,
         })
         return context
 
@@ -115,11 +118,50 @@ def do_refresh(request, scraper):
         response += "".join(clip_refresh_response_generator()) + "\n\n"
     return HttpResponse(response, content_type='text/plain')
 
-
 def clips(request, key=None):
     if key:
         clip = get_object_or_404(Clip, key=key)
         return render(request, 'clip.html', {'clip': clip})
     return render(request, 'clips.html', {'clips': Clip.objects.all()})
+
+def minical(request, feed='910', year=None, month=None):
+    if not year:
+        year = datetime.datetime.now().year
+        month = datetime.datetime.now().month
+    date = datetime.datetime(int(year), int(month), 1)
+    previous_month = date - datetime.timedelta(days=1)
+    previous_month = datetime.datetime(previous_month.year, previous_month.month, 1)
+    next_month = date + datetime.timedelta(days=31)
+    next_month = datetime.datetime(next_month.year, next_month.month, 1)
+    hcal = calendar.HTMLCalendar(6)
+    iter = hcal.itermonthdates(date.year, date.month)
+    today = datetime.date(
+        datetime.datetime.now().year,
+        datetime.datetime.now().month,
+        datetime.datetime.now().day,
+    )
+    return render(request, 'blocks/minical.html', {
+        'iter': iter,
+        'feed': feed,
+        'day': date,
+        'today': today,
+        'previous_month': previous_month,
+        'next_month': next_month,
+    })
+
+
 def about(request):
     return render(request, 'about.html')
+
+def search(request):
+    query_string = request.GET.get('q', None)
+    clip_query = search_util.get_query(query_string, ['name', 'description'])
+    hour_query = search_util.get_query(query_string, ['title', 'description'])
+    clips = Clip.objects.filter(clip_query)
+    hours = Hour.objects.filter(hour_query)
+    return render(request, 'results.html', {
+        'query': query_string,
+        'clips': clips,
+        'hours': hours,
+    })
+

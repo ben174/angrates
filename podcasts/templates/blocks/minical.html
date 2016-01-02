@@ -1,0 +1,38 @@
+{% load static %}
+{% load hours %}
+<div id="minical">
+    <div class="pull-right calpager">
+        <a href="{% url 'archive_month' feed=feed month=previous_month.month year=previous_month.year %}" class="btn btn-xs btn-info">
+            <span class="glyphicon glyphicon-menu-left" aria-hidden="true"></span>
+        </a>
+        <a href="{% url 'archive_month' feed=feed month=next_month.month year=next_month.year %}" class="btn btn-xs btn-info">
+            <span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span>
+        </a>
+    </div>
+    <h4>{{ day|date:"F" }}</h4>
+    <table width="100%" class="table table-condensed">
+        <tr>
+            <th>M</th>
+            <th>Tu</th>
+            <th>W</th>
+            <th>Th</th>
+            <th>F</th>
+        </tr>
+        {% for d in iter %}
+            {% if d.weekday == 5 %}
+                <tr>
+                    {% elif d.weekday < 5 %}
+                    {% has_hours d as populated %}
+                    <td class="{% if d.month != day.month %} other-month{% endif %}{% if d|date:"F d Y" == today|date:"F d Y" %} today{% endif %}{% if d|date:"F d Y" == day|date:"F d Y" %} selected{% endif %}{% if not populated %} empty{% endif %}">
+                        {% if populated %}
+                        <a href="{% url 'archive_day' year=d.year month=d.month day=d.day feed=feed %}">{{ d.day }}</a>
+                        {% else %}
+                        {{ d.day }}
+                        {% endif %}
+                    </td>
+                    {% elif d.weekday == 6 %}
+                </tr>
+            {% endif %}
+        {% endfor %}
+    </table>
+</div>

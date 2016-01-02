@@ -5,10 +5,8 @@
     <link rel="stylesheet" href="{% static 'css/calendar.css' %}">
 {% endblock %}
 {% block breadcrumbs %}
-    <ol class="breadcrumb">
-        <li><a href="/">Calendar</a></li>
-        <li class="active">{{ month|date:"F, Y" }}</li>
-    </ol>
+    <li><a href="/">Calendar</a></li>
+    <li class="active">{{ month|date:"F, Y" }}</li>
 {% endblock %}
 {% block content %}
     <div class="container">
@@ -71,7 +69,7 @@
                 {% if d.weekday != 5 and d.weekday != 6 %}
                     <div class="col-xs-1 date weekday-{{ d.weekday }}{% if d.month != month.month %} other-month{% endif %}{% if d|date:"F d Y" == today|date:"F d Y" %} today{% endif %}" onclick="document.location.href='{% url 'archive_day' year=d.year month=d.month day=d.day feed=feed %}';">
                         <div class="date-num">{{ d.day }}</div>
-                        {% hours_for d feed object_list as hours %}
+                        {% hours_for d feed as hours %}
                         {% for hour in hours %}
                             <a class="tiny-label" href="{% url 'archive_day' year=d.year month=d.month day=d.day feed=feed %}?play={{ forloop.counter }}" data-hour-id="{{ hour.id }}" data-toggle="tooltip" title="{{ hour.description }}"><b>{{ hour.pub_date|date:"G A" }}</b> {{ hour.title }}</a>
                         {% endfor %}

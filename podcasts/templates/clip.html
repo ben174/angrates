@@ -3,12 +3,12 @@
 {% block posthead %}
     <link rel="stylesheet" href="{% static 'css/day.css' %}">
 {% endblock %}
+{% block breadcrumbs %}
+    <li><a href="/">Home</a></li>
+    <li><a href="/clips/">Clip Gallery</a></li>
+    <li class="active">{{ clip.key }}</li>
+{% endblock %}
 {% block content %}
-    <ol class="breadcrumb">
-        <li><a href="/">Home</a></li>
-        <li><a href="/clips/">Clip Gallery</a></li>
-        <li class="active">{{ clip.key }}</li>
-    </ol>
     <div class="container">
         <h1>{{ clip.name }}</h1>
 
