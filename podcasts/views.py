@@ -3,12 +3,10 @@ import calendar
 import datetime
 
 from django.http import HttpResponse
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.views.generic.dates import MonthArchiveView, DayArchiveView
-from django.views.decorators.http import condition
-
-from podcasts.models import Hour
-from podcasts.util.scraper import FeedScraper
+from podcasts.models import Hour, Clip
+from podcasts.util.scraper import FeedScraper, ClipScraper
 
 
 def home(request, feed='910'):
@@ -91,18 +89,35 @@ class HourDayArchiveView(DayArchiveView):
         return context
 
 
-def refresh_response_generator():
+def clip_refresh_response_generator():
+    yield 'Refreshing Clips: {}\n'.format(str(datetime.datetime.now()))
+    scraper = ClipScraper()
+    for log_line in scraper.load_clips():
+        yield '{}: {}\n'.format(log_line[0], log_line[1])
+
+
+def feed_refresh_response_generator():
     yield 'Refreshing Feeds: {}\n'.format(str(datetime.datetime.now()))
     scraper = FeedScraper()
     scrapes = scraper.scrape_650, scraper.scrape_910
     for scrape in scrapes:
-        yield '{}\n{}\n'.format(scrape.__name__, '-'*10)
+        yield '{}\n{}\n'.format(scrape.__name__, '-' * 10)
         for log_line in scrape():
             yield '{}: {}\n'.format(log_line[0], log_line[1])
         yield '\n'
 
 
-@condition(etag_func=None)
-def do_refresh(request):
-    response = "".join(refresh_response_generator())
+def do_refresh(request, scraper):
+    response = ""
+    if scraper == 'feeds' or scraper == 'both':
+        response += "".join(feed_refresh_response_generator()) + "\n\n"
+    if scraper == 'clips' or scraper == 'both':
+        response += "".join(clip_refresh_response_generator()) + "\n\n"
     return HttpResponse(response, content_type='text/plain')
+
+
+def clips(request, key=None):
+    if key:
+        clip = get_object_or_404(Clip, key=key)
+        return render('clips.html', {'clip': clip})
+    return render(request, 'clips.html', {'clips': Clip.objects.all()})
