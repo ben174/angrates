@@ -121,3 +121,5 @@ def clips(request, key=None):
         clip = get_object_or_404(Clip, key=key)
         return render(request, 'clip.html', {'clip': clip})
     return render(request, 'clips.html', {'clips': Clip.objects.all()})
+def about(request):
+    return render(request, 'about.html')

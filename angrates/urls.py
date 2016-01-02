@@ -15,6 +15,7 @@ urlpatterns = [
     url(r'^(?P<feed>650|910)/$', podcasts.views.home, name='home'),
     url(r'^refresh/(?P<scraper>.+)/$', podcasts.views.do_refresh, name='do_refresh'),
     url(r'^clips/$', podcasts.views.clips, name='clips'),
+    url(r'^about/$', podcasts.views.about, name='about'),
     url(r'^clips/(?P<key>.+)/$', podcasts.views.clips, name='clips'),
     url(r'^admin/', admin.site.urls),
 ]

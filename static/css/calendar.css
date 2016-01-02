@@ -111,3 +111,7 @@ div.date:hover {
 h1 {
     margin-bottom: 20px;
 }
+
+.date {
+    background-color: #FCFCFC;
+}
