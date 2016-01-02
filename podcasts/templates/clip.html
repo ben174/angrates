@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block posthead %}
+    <link rel="stylesheet" href="{% static 'css/day.css' %}">
+{% endblock %}
+{% block content %}
+    <ol class="breadcrumb">
+        <li><a href="/">Home</a></li>
+        <li><a href="/clips/">Clip Gallery</a></li>
+        <li class="active">{{ clip.key }}</li>
+    </ol>
+    <div class="container">
+        <h1>{{ clip.name }}</h1>
+
+        <div class="well">
+            <h3>
+                {{ clip.description }}
+            </h3>
+        </div>
+        {% if clip.embed_link %}
+            <iframe width="560" height="315" class="embed-responsive-item" src="{{ clip.embed_link }}"
+                    allowfullscreen></iframe><br/>
+        {% else %}
+            <h1>:-(</h1>
+            <h3>No clip available for this video. If you know of one, please add it to the spreadsheet.</h3>
+        {% endif %}
+        <a href="{{ clip.link }}" target="_blank">{{ clip.link }}</a><br/><br/>
+
+        <div class="jumbotron">
+            <h4>Can you improve this entry?</h4>
+
+            <p>This is a publicly editable clip gallery. If anything is missing, or you have anything to add, please
+                feel free to edit the source spreadsheet.
+                This gallery will automatically pull the updated data every ten minutes.
+            </p>
+
+            <p><a href="https://docs.google.com/spreadsheets/d/1Gq8ORD1x6DuzkxzAgEblrMUOLsZ3I4OvdWtkl-Vypj8/edit#gid=0"
+                  class="btn btn-primary" role="button">Edit the Spreadsheet »</a></p>
+        </div>
+    </div>
+{% endblock %}

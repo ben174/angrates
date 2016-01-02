@@ -9,3 +9,5 @@ env
 venv
 staticfiles
 ang/custom_settings.py
+old
+.idea
