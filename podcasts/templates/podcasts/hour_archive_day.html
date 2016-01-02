@@ -6,16 +6,14 @@
 {% endblock %}
 {% block breadcrumbs %}
     <li><a href="/">Calendar</a></li>
-    <li><a href="{% url 'archive_month' year=day.year month=day.month feed=feed %}">{{ day|date:"F" }}</a></li>
-    <li class="active">Clip Gallery</li>
+    <li><a href="{% url 'archive_month' year=day.year month=day.month feed=feed %}">{{ day|date:"F, Y" }}</a></li>
+    <li class="active">{{ day|date:"M d, Y" }} - {{ feed }} feed</li>
 {% endblock %}
 {% block content %}
     <div class="container">
         <div class="row">
             <div class="col-md-12">
-
                 <h1>{{ day|date:"F d, Y" }}</h1>
-
                 <div class="row pager">
                     <div class="col-xs-5 text-right">
                         {% if previous_day %}

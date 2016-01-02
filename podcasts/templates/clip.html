@@ -18,8 +18,10 @@
             </h3>
         </div>
         {% if clip.embed_link %}
-            <iframe width="560" height="315" class="embed-responsive-item" src="{{ clip.embed_link }}"
-                    allowfullscreen></iframe><br/>
+            <div class="embed-responsive embed-responsive-16by9">
+            <iframe class="embed-responsive-item" src="{{ clip.embed_link }}"
+                    allowfullscreen></iframe>
+            </div>
         {% else %}
             <h1>:-(</h1>
             <h3>No clip available for this video. If you know of one, please add it to the spreadsheet.</h3>
