@@ -133,9 +133,9 @@
         </div>
         {% for d in iter %}
             {% if d.weekday != 5 and d.weekday != 6 %}
-                <div class="col-xs-1 date weekday-{{ d.weekday }}">
+                <div class="col-xs-1 date weekday-{{ d.weekday }}" onclick="document.location.href='/';">
                     <div class="date-num">{{ d.day }}</div>
-                   {% hours_for d as hours %}
+                    {% hours_for d as hours %}
                     {% for hour in hours %}
                         <div class="tiny-label">{{ hour }}</div>
                     {% endfor %}

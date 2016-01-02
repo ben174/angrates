@@ -16,6 +16,7 @@ def hours_for(date, feed, object_list):
     return Hour.objects.filter(
         pub_date__month=date.month,
         pub_date__day=date.day,
+        pub_date__year=date.year,
         feed=feed,
     )
     return object_list.filter(

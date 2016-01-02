@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block posthead %}
+    <link rel="stylesheet" href="{% static 'css/day.css' %}">
+{% endblock %}
+{% block content %}
+    <div class="container">
+        <h1>{{ day|date:"F d, Y" }}</h1>
+        <div class="row pager">
+            <div class="col-xs-3 text-left">
+                {% if previous_month %}
+                    <a href="{% url 'archive_day' feed=feed month=previous_day.month day=previous_day.day year=previous_day.year %}" class="btn btn-xs btn-info">
+                        <span class="glyphicon glyphicon-menu-left" aria-hidden="true"></span>
+                        {{ previous_day|date:"F d, Y" }}
+                    </a>
+                {% endif %}
+            </div>
+            <div class="col-xs-6 text-center">
+                {% if today|date:"F d Y" != day|date:"F d Y" %}
+                <a href="{% url 'home' feed=feed %}" class="btn btn-xs">
+                    Jump to Today
+                </a>
+                {% endif %}
+            </div>
+            <div class="col-xs-3 text-right">
+                {% if next_month %}
+                    <a href="{% url 'archive_day' feed=feed month=next_day.month day=next_day.day year=next_day.year %}" class="btn btn-xs btn-info">
+                        <span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span>
+                        {{ next_month|date:"F d, Y" }}
+                    </a>
+                {% endif %}
+            </div>
+        </div>
+
+        {% for object in object_list %}
+            <div class="row hour">
+                <div class="col-md-1">
+                    <b>{{ object.pub_date|date:"G A" }}</b>
+                </div>
+                <div class="col-md-11">
+                    <h3>{{ object.title }}</h3>
+                    <p>{{ object.description }}</p>
+                    <div class="listen">
+                        <a href="{{ object.link }}" class="btn btn-primary btn-sm"><i class="fa fa-volume-up"></i> Listen ({{ feed }} feed)</a>
+                        {% with object.get_alternate_feeds as alts %}
+                            {% for alt in alts %}
+                                <a href="{{ alt.link }}" class="btn btn-default btn-sm"><i class="fa fa-volume-up"></i> Listen ({{ alt.feed }} feed)</a>
+                            {% endfor %}
+                        {% endwith %}
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}
+{% block postfoot %}
+    <script src="{% static 'js/day.js' %}"></script>
+{% endblock %}
+{% block link_910 %}{% url 'archive_day' year=day.year month=day.month day=day.day feed='910' %}{% endblock %}
+{% block link_650 %}{% url 'archive_day' year=day.year month=day.month day=day.day feed='650' %}{% endblock %}
+
