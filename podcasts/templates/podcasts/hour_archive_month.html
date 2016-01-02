@@ -5,46 +5,74 @@
     <link rel="stylesheet" href="{% static 'css/calendar.css' %}">
 {% endblock %}
 {% block content %}
-    <h3>Feed {{ feed }}</h3>
-<p>
-    {% if previous_month %}
-        Previous Month:
-        <a href="{% url 'archive_month' feed=feed month=previous_month.month year=previous_month.year %}">{{ previous_month|date:"F Y" }}</a>
-    {% endif %}
-    {% if next_month %}
-        Next Month:
-        <a href="{% url 'archive_month' feed=feed month=next_month.month year=next_month.year %}">{{ next_month|date:"F Y" }}</a>
-    {% endif %}
-</p>
 
-<div class="container">
-    <div class="row five-cols calendar">
-        <div class="col-xs-1 week-header">
-            Monday
+
+    <div class="container">
+        <div class="row header-banner">
+            <div class="col-sm-3">
+                {% if previous_month %}
+                    <a href="{% url 'archive_month' feed=feed month=previous_month.month year=previous_month.year %}">
+                        <span class="glyphicon glyphicon-menu-left" aria-hidden="true"></span>
+                        {{ previous_month|date:"F Y" }}
+                    </a>
+                {% endif %}
+            </div>
+            <div class="col-sm-6">
+                <h1>{{ month|date:"F, Y" }}</h1>
+
+                <h3>Feed {{ feed }}</h3>
+                {% if feed == '910' %}
+                    <a href="{% url 'home' feed="650" %}">
+                        Switch to 650
+                    </a>
+                {% else %}
+                    <a href="{% url 'home' feed="910" %}">
+                        Switch to 910
+                    </a>
+                {% endif %}
+
+            </div>
+            <div class="col-sm-3">
+                {% if next_month %}
+                    <a href="{% url 'archive_month' feed=feed month=next_month.month year=next_month.year %}">
+                        <span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span>
+                        {{ next_month|date:"F Y" }}
+                    </a>
+                {% endif %}
+            </div>
         </div>
-        <div class="col-xs-1 week-header">
-            Tuesday
+        <div class="row five-cols calendar">
+            <div class="col-xs-1 week-header">
+                Monday
+            </div>
+            <div class="col-xs-1 week-header">
+                Tuesday
+            </div>
+            <div class="col-xs-1 week-header">
+                Wednesday
+            </div>
+            <div class="col-xs-1 week-header">
+                Thursday
+            </div>
+            <div class="col-xs-1 week-header">
+                Friday
+            </div>
+            {% for d in iter %}
+                {% ifchanged d|date:"F" %}
+                    <div class="col-xs-1 date month-header">
+                        {{ d|date:"F" }}
+                    </div>
+                {% endifchanged %}
+                {% if d.weekday != 5 and d.weekday != 6 %}
+                    <div class="col-xs-1 date weekday-{{ d.weekday }}">
+                        <div class="date-num">{{ d.day }}</div>
+                        {% hours_for d feed object_list as hours %}
+                        {% for hour in hours %}
+                            <a class="tiny-label" href="{{ hour.link }}">{{ hour }}</a>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            {% endfor %}
         </div>
-        <div class="col-xs-1 week-header">
-            Wednesday
-        </div>
-        <div class="col-xs-1 week-header">
-            Thursday
-        </div>
-        <div class="col-xs-1 week-header">
-            Friday
-        </div>
-        {% for d in iter %}
-            {% if d.weekday != 5 and d.weekday != 6 %}
-                <div class="col-xs-1 date weekday-{{ d.weekday }}">
-                    <div class="date-num">{{ d.day }}</div>
-                    {% hours_for d feed object_list as hours %}
-                    {% for hour in hours %}
-                        <div class="tiny-label">{{ hour }}</div>
-                    {% endfor %}
-                </div>
-            {% endif %}
-        {% endfor %}
     </div>
-</div>
 {% endblock %}

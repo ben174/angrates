@@ -1,6 +1,15 @@
 import calendar
+
+import datetime
 from django.views.generic.dates import MonthArchiveView
 from podcasts.models import Hour
+
+
+def home(request, feed='910'):
+    today = datetime.date.today()
+    return HourMonthArchiveView.as_view()(request,
+                                          year=str(today.year - 1),
+                                          month=str(today.month), feed=feed)
 
 
 class HourMonthArchiveView(MonthArchiveView):

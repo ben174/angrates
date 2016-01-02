@@ -1,4 +1,7 @@
 from __future__ import unicode_literals
+
+import re
+
 from django.db import models
 import datetime
 
@@ -51,6 +54,18 @@ class Hour(models.Model):
     class Meta:
         ordering = ['pub_date']
 
+    @classmethod
+    def _clean_title(cls, title):
+        title = re.sub(r"(?i)^Armstrong and Getty(.*)$", "\g<1>", title)
+        title = re.sub(r"(?i)^[0-9]{6}(.*)$", "\g<1>", title)
+        title = re.sub(r"^[0-9]*\-[0-9]*\-[0-9]*\s(.*)$", "\g<1>", title)
+        title = re.sub(r"(?i)^(?i)[0-9]\s?[AP]M[\s\-]+(.*)$", "\g<1>", title)
+        return title
+
+    def save(self, *args, **kwargs):
+        self.title = Hour._clean_title(self.title)
+        super(Hour, self).save(*args, **kwargs)
+
     def __unicode__( self ):
-        return self.title
+        return Hour._clean_title(self.title)
 
