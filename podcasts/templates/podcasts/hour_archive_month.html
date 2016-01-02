@@ -11,18 +11,15 @@
 {% block content %}
     <div class="container">
         <div class="row header-banner">
-            <div class="col-sm-3">
-            </div>
-            <div class="col-sm-6">
+            <div class="col-lg-12 text-center">
                 <h1>{{ month|date:"F, Y" }}</h1>
-            </div>
-            <div class="col-sm-3">
             </div>
         </div>
         <div class="row">
             <div class="col-xs-3 text-left">
                 {% if previous_month %}
-                    <a href="{% url 'archive_month' feed=feed month=previous_month.month year=previous_month.year %}" class="btn btn-xs btn-info">
+                    <a href="{% url 'archive_month' feed=feed month=previous_month.month year=previous_month.year %}"
+                       class="btn btn-xs btn-info">
                         <span class="glyphicon glyphicon-menu-left" aria-hidden="true"></span>
                         {{ previous_month|date:"F, Y" }}
                     </a>
@@ -30,14 +27,15 @@
             </div>
             <div class="col-xs-6 text-center">
                 {% if today|date:"F, Y" != month|date:"F, Y" %}
-                <a href="{% url 'home' feed=feed %}" class="btn btn-xs">
-                    Jump to Today
-                </a>
+                    <a href="{% url 'home' feed=feed %}" class="btn btn-xs">
+                        Jump to Today
+                    </a>
                 {% endif %}
             </div>
             <div class="col-xs-3 text-right">
                 {% if next_month %}
-                    <a href="{% url 'archive_month' feed=feed month=next_month.month year=next_month.year %}" class="btn btn-xs btn-info">
+                    <a href="{% url 'archive_month' feed=feed month=next_month.month year=next_month.year %}"
+                       class="btn btn-xs btn-info">
                         <span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span>
                         {{ next_month|date:"F, Y" }}
                     </a>
@@ -67,11 +65,16 @@
                     </div>
                 {% endifchanged %}
                 {% if d.weekday != 5 and d.weekday != 6 %}
-                    <div class="col-xs-1 date weekday-{{ d.weekday }}{% if d.month != month.month %} other-month{% endif %}{% if d|date:"F d Y" == today|date:"F d Y" %} today{% endif %}" onclick="document.location.href='{% url 'archive_day' year=d.year month=d.month day=d.day feed=feed %}';">
+                    <div class="col-xs-1 date weekday-
+                            {{ d.weekday }}{% if d.month != month.month %} other-month{% endif %}{% if d|date:"F d Y" == today|date:"F d Y" %} today{% endif %}"
+                         onclick="document.location.href='{% url 'archive_day' year=d.year month=d.month day=d.day feed=feed %}';">
                         <div class="date-num">{{ d.day }}</div>
                         {% hours_for d feed as hours %}
                         {% for hour in hours %}
-                            <a class="tiny-label" href="{% url 'archive_day' year=d.year month=d.month day=d.day feed=feed %}?play={{ forloop.counter }}" data-hour-id="{{ hour.id }}" data-toggle="tooltip" title="{{ hour.description }}"><b>{{ hour.pub_date|date:"G A" }}</b> {{ hour.title }}</a>
+                            <a class="tiny-label"
+                               href="{% url 'archive_day' year=d.year month=d.month day=d.day feed=feed %}?play={{ forloop.counter }}"
+                               data-hour-id="{{ hour.id }}" data-toggle="tooltip"
+                               title="{{ hour.description }}"><b>{{ hour.pub_date|date:"G A" }}</b> {{ hour.title }}</a>
                         {% endfor %}
                     </div>
                 {% endif %}

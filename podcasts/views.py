@@ -153,12 +153,16 @@ def minical(request, feed='910', year=None, month=None):
 def about(request):
     return render(request, 'about.html')
 
+
 def search(request):
-    query_string = request.GET.get('q', None)
-    clip_query = search_util.get_query(query_string, ['name', 'description'])
-    hour_query = search_util.get_query(query_string, ['title', 'description'])
-    clips = Clip.objects.filter(clip_query)
-    hours = Hour.objects.filter(hour_query)
+    query_string = request.GET.get('q', '')
+    clips = None
+    hours = None
+    if query_string:
+        clip_query = search_util.get_query(query_string, ['name', 'description'])
+        hour_query = search_util.get_query(query_string, ['title', 'description'])
+        clips = Clip.objects.filter(clip_query)
+        hours = Hour.objects.filter(hour_query)
     return render(request, 'results.html', {
         'query': query_string,
         'clips': clips,

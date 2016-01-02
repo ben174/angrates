@@ -5,8 +5,20 @@
     <li class="active">Search: "{{ query }}"</li>
 {% endblock %}
 {% block content %}
+
+
     <div class="container">
-    <h1>Search Results</h1>
+        <h1>Search</h1>
+        <form class="form-inline" action="{% url 'search' %}" method="get" role="search">
+            <div class="form-group">
+                <div class="input-group">
+                    <div class="input-group-addon"><i class="fa fa-search"></i></div>
+                    <input type="text" class="form-control input-sm" name="q" placeholder="Search" value="{{ query }}">
+                </div>
+            </div>
+            <button type="submit" class="btn btn-default btn-sm">Search</button>
+        </form>
+        {% if query %}
         {% if clips %}
             <h2>Clips</h2>
             <ul>
@@ -22,11 +34,14 @@
             <h2>Episodes</h2>
             <ul>
                 {% for hour in hours %}
-                    <li><a href="{% url 'archive_day' year=hour.pub_date.year month=hour.pub_date.month day=hour.pub_date.day feed=hour.feed %}">{{ hour }}</a> - {{ hour.description }}</li>
+                    <li>
+                        <a href="{% url 'archive_day' year=hour.pub_date.year month=hour.pub_date.month day=hour.pub_date.day feed=hour.feed %}">{{ hour }}</a>
+                        - {{ hour.description }}</li>
                 {% endfor %}
             </ul>
         {% else %}
             <blockquote>No episodes found.</blockquote>
+        {% endif %}
         {% endif %}
     </div>
 {% endblock %}
