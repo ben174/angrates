@@ -16,6 +16,10 @@ urlpatterns = [
     url(r'^refresh/(?P<scraper>.+)/$', podcasts.views.do_refresh, name='do_refresh'),
     url(r'^clips/$', podcasts.views.clips, name='clips'),
     url(r'^about/$', podcasts.views.about, name='about'),
+    url(r'^search/$', podcasts.views.search, name='search'),
     url(r'^clips/(?P<key>.+)/$', podcasts.views.clips, name='clips'),
+    url(r'^minical/(?P<feed>650|910)/(?P<year>[0-9]{4})/(?P<month>[0-9]+)/$',
+        podcasts.views.minical,
+        name="minical"),
     url(r'^admin/', admin.site.urls),
 ]

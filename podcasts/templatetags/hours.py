@@ -12,19 +12,21 @@ def current_time(format_string):
 
 
 @register.simple_tag
-def hours_for(date, feed, object_list):
+def hours_for(date, feed):
     return Hour.objects.filter(
         pub_date__month=date.month,
         pub_date__day=date.day,
         pub_date__year=date.year,
         feed=feed,
     )
-    return object_list.filter(
-        pub_date__year=date.year,
+
+@register.simple_tag
+def has_hours(date):
+    return Hour.objects.filter(
         pub_date__month=date.month,
         pub_date__day=date.day,
-    )
-
+        pub_date__year=date.year,
+    ).exists()
 
 def cut(value, arg):
     """Removes all values of arg from the given string"""

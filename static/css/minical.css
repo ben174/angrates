@@ -1,0 +1,31 @@
+#minical h4 {
+    margin-top: 0px;
+}
+
+th, td {
+    text-align: center;
+}
+
+td.today > a {
+    border-radius: 4px;
+    padding: 0px;
+    background-color: #FFF793;
+}
+
+td.selected {
+    font-weight: bold;
+    background-color: #FFFFDB;
+    border: solid 1px #CCC;
+}
+
+td.empty {
+
+}
+
+td.other-month {
+    background-color: #e5e5e5;
+}
+
+td.empty {
+    color: #CCC;
+}

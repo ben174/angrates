@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block breadcrumbs %}
+    <li><a href="/">Home</a></li>
+    <li class="active">Search: "{{ query }}"</li>
+{% endblock %}
+{% block content %}
+    <div class="container">
+    <h1>Search Results</h1>
+        {% if clips %}
+            <h2>Clips</h2>
+            <ul>
+                {% for clip in clips %}
+                    <li><a href="/clips/{{ clip.key }}">{{ clip.name }}</a> - {{ clip.description }}</li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <blockquote>No clips found.</blockquote>
+        {% endif %}
+
+        {% if hours %}
+            <h2>Episodes</h2>
+            <ul>
+                {% for hour in hours %}
+                    <li><a href="{% url 'archive_day' year=hour.pub_date.year month=hour.pub_date.month day=hour.pub_date.day feed=hour.feed %}">{{ hour }}</a> - {{ hour.description }}</li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <blockquote>No episodes found.</blockquote>
+        {% endif %}
+    </div>
+{% endblock %}
