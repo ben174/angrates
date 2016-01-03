@@ -169,3 +169,5 @@ def search(request):
         'hours': hours,
     })
 
+def robots(request):
+    return HttpResponse('User-agent: *\nDisallow:', content_type='text/plain')
