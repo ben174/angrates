@@ -100,6 +100,10 @@ div.date.month-header {
 div.date.other-month {
     background-color: #EEE;
 }
+div.date.weekday-0 {
+    border-left: solid 1px #ddd;
+}
+
 div.date:hover {
     background-color: #FFFFDB;
     cursor: pointer;
