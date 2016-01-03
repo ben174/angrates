@@ -14,36 +14,16 @@
     <div class="container">
         <div class="row header-banner">
             <div class="col-lg-12 text-center">
-                <h1>{{ month|date:"F, Y" }}</h1>
+                <h1 class="hidden-xs">Armstrong & Getty Podcasts</h1>
+                <h2>{{ month|date:"F, Y" }}</h2>
             </div>
         </div>
-        <div class="row">
-            <div class="col-xs-3 text-left">
-                {% if previous_month %}
-                    <a href="{% url 'archive_month' feed=feed month=previous_month.month year=previous_month.year %}"
-                       class="btn btn-xs btn-info">
-                        <span class="glyphicon glyphicon-menu-left" aria-hidden="true"></span>
-                        {{ previous_month|date:"F, Y" }}
-                    </a>
-                {% endif %}
-            </div>
-            <div class="col-xs-6 text-center">
-                {% if today|date:"F, Y" != month|date:"F, Y" %}
-                    <a href="{% url 'home' feed=feed %}" class="btn btn-xs">
-                        Jump to Today
-                    </a>
-                {% endif %}
-            </div>
-            <div class="col-xs-3 text-right">
-                {% if next_month %}
-                    <a href="{% url 'archive_month' feed=feed month=next_month.month year=next_month.year %}"
-                       class="btn btn-xs btn-info">
-                        <span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span>
-                        {{ next_month|date:"F, Y" }}
-                    </a>
-                {% endif %}
-            </div>
-        </div>
+        <nav>
+            <ul class="pager">
+                <li class="previous"><a href="{% url 'archive_month' feed=feed month=previous_month.month year=previous_month.year %}"><span aria-hidden="true">&larr;</span> {{ previous_month|date:"F" }}</a></li>
+                <li class="next"><a href="{% url 'archive_month' feed=feed month=next_month.month year=next_month.year %}">{{ next_month|date:"F" }} <span aria-hidden="true">&rarr;</span></a></li>
+            </ul>
+        </nav>
         <div class="row five-cols calendar">
             <div class="col-xs-1 week-header">
                 Monday
@@ -82,6 +62,12 @@
                 {% endif %}
             {% endfor %}
         </div>
+        <nav>
+            <ul class="pager">
+                <li class="previous"><a href="{% url 'archive_month' feed=feed month=previous_month.month year=previous_month.year %}"><span aria-hidden="true">&larr;</span> {{ previous_month|date:"F, Y" }}</a></li>
+                <li class="next"><a href="{% url 'archive_month' feed=feed month=next_month.month year=next_month.year %}">{{ next_month|date:"F, Y" }}<span aria-hidden="true">&rarr;</span></a></li>
+            </ul>
+        </nav>
     </div>
 {% endblock %}
 {% block postfoot %}

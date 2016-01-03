@@ -113,9 +113,17 @@ div.date:hover {
 }
 
 h1 {
-    margin-bottom: 20px;
+    margin-bottom: 10px;
 }
 
 .date {
     background-color: #FCFCFC;
+}
+
+.pager {
+    margin: 0px;
+}
+
+h2 {
+    margin: 10px;
 }
