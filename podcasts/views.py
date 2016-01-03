@@ -2,6 +2,7 @@ import calendar
 
 import datetime
 
+from django.core.urlresolvers import reverse
 from django.http import HttpResponse
 from django.shortcuts import render, get_object_or_404
 from django.views.generic.dates import MonthArchiveView, DayArchiveView
@@ -11,11 +12,22 @@ from podcasts.util.scraper import FeedScraper, ClipScraper
 
 
 def home(request, feed='910'):
-    today = datetime.date.today() - datetime.timedelta(days=30)
+    latest_episode = Hour.objects.latest('pub_date')
     return month(
         request,
-        year=today.year,
-        month=today.month,
+        year=latest_episode.pub_date.year,
+        month=latest_episode.pub_date.month,
+        feed=feed,
+    )
+
+
+def latest_day(request, feed='910'):
+    latest_episode = Hour.objects.latest('pub_date')
+    return HourDayArchiveView.as_view()(
+        request=request,
+        year=str(latest_episode.pub_date.year),
+        month=str(latest_episode.pub_date.month),
+        day=str(latest_episode.pub_date.day),
         feed=feed,
     )
 
@@ -39,6 +51,13 @@ def month(request, year=None, month=None, feed='910'):
         datetime.datetime.now().month,
         datetime.datetime.now().day,
     )
+
+    alt_feed = '650' if feed == '910' else '910'
+    alt_link = reverse('archive_month', kwargs={
+        'feed': alt_feed,
+        'year': year,
+        'month': month
+    })
     return render(request, 'podcasts/hour_archive_month.html', {
         'iter': iter,
         'hcal': hcal,
@@ -48,6 +67,7 @@ def month(request, year=None, month=None, feed='910'):
         'previous_month': previous_month,
         'next_month': next_month,
         'today': today,
+        'alt_link': alt_link,
     })
 
 
@@ -69,6 +89,14 @@ class HourMonthArchiveView(MonthArchiveView):
         return context
 
 
+def _get_alt_feed_kwargs(kwargs):
+    ret = kwargs.copy()
+    alt_feed = '650' if kwargs['feed'] == '910' else '910'
+    ret.update({'feed': alt_feed})
+    return ret
+
+
+
 class HourDayArchiveView(DayArchiveView):
     queryset = Hour.objects.all()
     date_field = 'pub_date'
@@ -84,10 +112,12 @@ class HourDayArchiveView(DayArchiveView):
         hcal = calendar.HTMLCalendar(6)
         iter = hcal.itermonthdates(int(self.get_year()), int(self.get_month()))
         today = datetime.date.today()
+        alt_link = reverse('archive_day', kwargs=_get_alt_feed_kwargs(self.kwargs))
         context.update({
             'iter': iter,
             'feed': self.kwargs['feed'],
             'today': today,
+            'alt_link': alt_link,
         })
         return context
 
@@ -168,6 +198,7 @@ def search(request):
         'clips': clips,
         'hours': hours,
     })
+
 
 def robots(request):
     return HttpResponse('User-agent: *\nDisallow:', content_type='text/plain')

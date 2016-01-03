@@ -21,8 +21,15 @@
                 <h1>{{ day|date:"F d, Y" }}</h1>
                 <nav>
                     <ul class="pager">
-                        <li class="previous"><a href="{% url 'archive_day' feed=feed month=previous_day.month day=previous_day.day year=previous_day.year %}"><span aria-hidden="true">&larr;</span> {{ previous_day|date:"F d, Y" }}</a></li>
-                        <li class="next"><a href="{% url 'archive_day' feed=feed month=next_day.month day=next_day.day year=next_day.year %}"> {{ next_day|date:"F d, Y" }}<span aria-hidden="true">&rarr;</span></a></li>
+                        <li class="previous"><a href="{% url 'archive_day' feed=feed month=previous_day.month day=previous_day.day year=previous_day.year %}"><span aria-hidden="true">&larr;</span> {{ previous_day|date:"m/d/y" }}</a></li>
+                        <li>
+                            {% include "blocks/feed_toggle.html" %}
+                        </li>
+                        {% if next_day %}
+                        <li class="next"><a href="{% url 'archive_day' feed=feed month=next_day.month day=next_day.day year=next_day.year %}"> {{ next_day|date:"m/d/y" }}<span aria-hidden="true">&rarr;</span></a></li>
+                        {% else %}
+                        <li class="next disabled"><a href="#">Next <span aria-hidden="true">&rarr;</span></a></li>
+                        {% endif %}
                     </ul>
                 </nav>
                 {% for object in object_list %}
@@ -56,6 +63,9 @@
 {% block postfoot %}
     <script src="{% static 'js/day.js' %}"></script>
     <script src="{% static 'js/minical.js' %}"></script>
+    <script>
+        var selectedDay = "{{ day.timetuple.tm_yday }}";
+    </script>
 {% endblock %}
 {% block link_910 %}{% url 'archive_day' year=day.year month=day.month day=day.day feed='910' %}{% endblock %}
 {% block link_650 %}{% url 'archive_day' year=day.year month=day.month day=day.day feed='650' %}{% endblock %}

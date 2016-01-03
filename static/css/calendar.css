@@ -8,6 +8,10 @@
     .week-header {
         display: none;
     }
+    div.calendar > div.date {
+        line-height: 2;
+        padding-bottom: 15px;
+    }
 }
 
 @media (min-width: 768px) {
@@ -20,11 +24,13 @@
     .week-header {
         display: block;
     }
-    .calendar > .date {
-        min-height: 110px;
-    }
     .month-header {
         display: none;
+    }
+    div.calendar > div.date {
+        line-height: 1.6;
+        min-height: 110px;
+        padding-bottom: 0px;
     }
 }
 
@@ -50,7 +56,6 @@
     border: solid 1px #ddd;
     border-left: none;
     border-bottom:none;
-    line-height: 1.6;
 }
 .calendar {
     margin-top: 15px;
@@ -126,4 +131,11 @@ h1 {
 
 h2 {
     margin: 10px;
+}
+
+.date-label {
+    font-size: 75%;
+    margin-top: 5px;
+    text-transform: uppercase;
+    color: #666;
 }

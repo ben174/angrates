@@ -22,5 +22,7 @@ urlpatterns = [
         podcasts.views.minical,
         name="minical"),
     url(r'^robots.txt/$', podcasts.views.robots, name='robots'),
+    url(r'^latest/$', podcasts.views.latest_day, name='latest_day'),
+    url(r'^(?P<feed>650|910)/latest$', podcasts.views.latest_day, name='latest_day'),
     url(r'^admin/', admin.site.urls),
 ]
