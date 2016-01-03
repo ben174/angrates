@@ -23,7 +23,7 @@
                 <tr>
                     {% elif d.weekday < 5 %}
                     {% has_hours d as populated %}
-                    <td class="{% if d.month != day.month %} other-month{% endif %}{% if d|date:"F d Y" == today|date:"F d Y" %} today{% endif %}{% if d|date:"F d Y" == day|date:"F d Y" %} selected{% endif %}{% if not populated %} empty{% endif %}">
+                    <td id="day-{{ d.timetuple.tm_yday }}" class="{% if d.month != day.month %} other-month{% endif %}{% if d|date:"F d Y" == today|date:"F d Y" %} today{% endif %}{% if not populated %} empty{% endif %}">
                         {% if populated %}
                         <a href="{% url 'archive_day' year=d.year month=d.month day=d.day feed=feed %}">{{ d.day }}</a>
                         {% else %}

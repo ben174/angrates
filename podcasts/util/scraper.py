@@ -3,7 +3,6 @@ import csv
 import re
 import string
 import xml.etree.ElementTree as ET
-
 import datetime
 
 import requests
@@ -16,22 +15,26 @@ class LogLevels:
     WARNING = 'WARNING'
     ERROR = 'ERROR'
 
-class FeedScraper:
 
+class FeedScraper:
     def scrape_650(self):
         tree = ET.parse('data/650.xml')
         root = tree.getroot()
         items = root.findall('channel/item')
+        future_cutoff = datetime.datetime.now() + datetime.timedelta(days=1)
         for item in items:
             media_title = item.find('mediaTitle').text
             description = item.find('description').text
-            description = re.sub( '\s+', ' ', description ).strip()
+            description = re.sub('\s+', ' ', description).strip()
             title = item.find('title').text
-            title = re.sub( '\s+', ' ', title ).strip()
+            title = re.sub('\s+', ' ', title).strip()
             url = item.find('enclosure').attrib['url']
             dt = self._get_650_date(media_title)
             if not dt:
                 yield LogLevels.ERROR, 'Error Parsing Title: ' + title
+                continue
+            if dt > future_cutoff:
+                yield LogLevels.ERROR, 'Won\'t try to create an episode in the future'
                 continue
             hour, created = Hour.objects.get_or_create(pub_date=dt, feed='650')
             # strips extra whitespace
@@ -50,10 +53,12 @@ class FeedScraper:
         tree = ET.parse('data/910.xml')
         root = tree.getroot()
         items = root.findall('channel/item')
+
+        future_cutoff = datetime.datetime.now() + datetime.timedelta(days=1)
         for item in items:
             media_title = item.find('mediaTitle').text
             description = item.find('description').text
-            description = re.sub( '\s+', ' ', description).strip()
+            description = re.sub('\s+', ' ', description).strip()
             summary = item.find('{http://www.itunes.com/dtds/podcast-1.0.dtd}summary').text
             summary = re.sub('\s+', ' ', summary).strip()
             pub_date = item.find('pubDate').text
@@ -63,6 +68,9 @@ class FeedScraper:
             dt = self._get_910_date(pub_date, title)
             if not dt:
                 yield LogLevels.ERROR, 'Error Parsing Title: ' + title
+                continue
+            if dt > future_cutoff:
+                yield LogLevels.ERROR, 'Won\'t try to create an episode in the future'
                 continue
             hour, created = Hour.objects.get_or_create(pub_date=dt, feed="910")
             hour.description = description
@@ -115,7 +123,8 @@ class FeedScraper:
 
 class ClipScraper:
     def load_clips(self):
-        response = requests.get('https://docs.google.com/spreadsheet/ccc?key=1Gq8ORD1x6DuzkxzAgEblrMUOLsZ3I4OvdWtkl-Vypj8&output=csv')
+        response = requests.get(
+            'https://docs.google.com/spreadsheet/ccc?key=1Gq8ORD1x6DuzkxzAgEblrMUOLsZ3I4OvdWtkl-Vypj8&output=csv')
         if response.status_code != 200:
             yield LogLevels.ERROR, 'Google Docs returned a bad status code: ' + str(response.status_code)
         f = StringIO.StringIO(response.content)
@@ -132,9 +141,9 @@ class ClipScraper:
                 description = row[2]
                 link = row[3]
                 # strip unicode characters
-                name = name.decode('unicode_escape').encode('ascii','ignore')
-                description = description.decode('unicode_escape').encode('ascii','ignore')
-                link = link.decode('unicode_escape').encode('ascii','ignore')
+                name = name.decode('unicode_escape').encode('ascii', 'ignore')
+                description = description.decode('unicode_escape').encode('ascii', 'ignore')
+                link = link.decode('unicode_escape').encode('ascii', 'ignore')
                 if clip.name != name or clip.description != description or clip.link != link:
                     yield LogLevels.SUCCESS, 'Updating clip: %s' % key
                     clip.name = row[1]
