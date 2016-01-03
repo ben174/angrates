@@ -21,7 +21,7 @@
                 <h1>{{ day|date:"F d, Y" }}</h1>
                 <nav>
                     <ul class="pager">
-                        <li class="previous"><a href="{% url 'archive_month' feed=feed month=previous_month.month year=previous_month.year %}"><span aria-hidden="true">&larr;</span> {{ previous_day|date:"F d, Y" }}</a></li>
+                        <li class="previous"><a href="{% url 'archive_day' feed=feed month=previous_day.month day=previous_day.day year=previous_day.year %}"><span aria-hidden="true">&larr;</span> {{ previous_day|date:"F d, Y" }}</a></li>
                         <li class="next"><a href="{% url 'archive_day' feed=feed month=next_day.month day=next_day.day year=next_day.year %}"> {{ next_day|date:"F d, Y" }}<span aria-hidden="true">&rarr;</span></a></li>
                     </ul>
                 </nav>
