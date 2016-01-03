@@ -169,3 +169,6 @@ def search(request):
         'hours': hours,
     })
 
+
+def verification(request):
+    return HttpResponse('google-site-verification: google07b0b1ab3e57735f.html', content_type='text/plain')
