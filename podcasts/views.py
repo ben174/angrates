@@ -11,7 +11,7 @@ from podcasts.util.scraper import FeedScraper, ClipScraper
 
 
 def home(request, feed='910'):
-    today = datetime.date.today()
+    today = datetime.date.today() - datetime.timedelta(days=30)
     return month(
         request,
         year=today.year,
@@ -169,6 +169,3 @@ def search(request):
         'hours': hours,
     })
 
-
-def verification(request):
-    return HttpResponse('google-site-verification: google07b0b1ab3e57735f.html', content_type='text/plain')

@@ -22,5 +22,4 @@ urlpatterns = [
         podcasts.views.minical,
         name="minical"),
     url(r'^admin/', admin.site.urls),
-    url(r'^google07b0b1ab3e57735f.html$', podcasts.views.verification)
 ]

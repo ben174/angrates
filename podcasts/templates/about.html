@@ -1,8 +1,5 @@
 {% extends 'base.html' %}
 {% load staticfiles %}
-{% block posthead %}
-    <link rel="stylesheet" href="{% static 'css/day.css' %}">
-{% endblock %}
 {% block breadcrumbs %}
     <li><a href="/">Home</a></li>
     <li class="active">About</li>
@@ -36,6 +33,10 @@
                 <li>Mobile-friendly</li>
             </ul>
 
+            <h3>Need Some Work Done?</h3>
+            <p>I offer consulting services if you'd like a web application build for your business.
+            <a href="mailto:resume@bugben.com">Contact me</a> for rates.</p>
+            <h3>Donate</h3>
             <p>If you like this site enough to want to help with hosting costs, donations are appreciated
             (but not at all required)</p>
 
@@ -56,10 +57,15 @@
                 </a>
             </div>
             </p>
+            <h3>Comments? Suggestions?</h3>
+            <p>Join the <a
+                    href="http://www.reddit.com/r/armstrongandgetty/comments/1ie21j/ag_i_created_a_site_to_search_show_archives_and/">discussion
+                on Reddit</a>, or email me (contact info on my <a href="http://www.bugben.com">my home page</a>). </p>
 
-            <p>A note to A&G: <i>I know you want traffic to your home page, but your feed sucks.
+            <h3>A Note to A&G</h3>
+            <p>I know you want traffic to your home page, but your feed sucks.
                 If you want to host this site, <b>I'd be happy to hand it over to you.
-                </b> Just say the word.</i>
+                </b> Just say the word.
             </p>
         </div>
     </div>
