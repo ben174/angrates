@@ -1,5 +1,7 @@
 {% extends 'base.html' %}
 {% load staticfiles %}
+{% block metadescription %}Armstrong and Getty Podcast Day View for {{ day|date:"M d, Y" }}{% endblock %}
+{% block subtitle %}Podcasts for {{ day|date:"M d, Y" }}{% endblock %}
 {% block posthead %}
     <link rel="stylesheet" href="{% static 'css/day.css' %}">
     <link rel="stylesheet" href="{% static 'css/minical.css' %}">

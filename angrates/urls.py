@@ -21,5 +21,6 @@ urlpatterns = [
     url(r'^minical/(?P<feed>650|910)/(?P<year>[0-9]{4})/(?P<month>[0-9]+)/$',
         podcasts.views.minical,
         name="minical"),
+    url(r'^robots.txt/$', podcasts.views.robots, name='robots'),
     url(r'^admin/', admin.site.urls),
 ]
