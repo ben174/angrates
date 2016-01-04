@@ -6,7 +6,7 @@ import podcasts.views
 
 urlpatterns = [
     url(r'^(?P<feed>650|910)/(?P<year>[0-9]{4})/(?P<month>[0-9]+)/$',
-        podcasts.views.month,
+        podcasts.views.month_calendar,
         name="archive_month"),
     url(r'^(?P<feed>650|910)/(?P<year>[0-9]{4})/(?P<month>[0-9]+)/(?P<day>[0-9]+)/$',
         podcasts.views.HourDayArchiveView.as_view(month_format='%m'),

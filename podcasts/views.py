@@ -1,9 +1,9 @@
+import datetime
 import calendar
 
-import datetime
-
+from django.core.exceptions import ObjectDoesNotExist
 from django.core.urlresolvers import reverse
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseNotFound
 from django.shortcuts import render, get_object_or_404
 from django.views.generic.dates import MonthArchiveView, DayArchiveView
 from podcasts.models import Hour, Clip
@@ -12,17 +12,28 @@ from podcasts.util.scraper import FeedScraper, ClipScraper
 
 
 def home(request, feed='910'):
-    latest_episode = Hour.objects.latest('pub_date')
-    return month(
+    year = datetime.datetime.now().year
+    month = datetime.datetime.now().month
+    try:
+        latest_episode = Hour.objects.latest('pub_date')
+        year = latest_episode.pub_date.year
+        month = latest_episode.pub_date.month
+    except ObjectDoesNotExist:
+        # no entries, just show empty calendar
+        pass
+    return month_calendar(
         request,
-        year=latest_episode.pub_date.year,
-        month=latest_episode.pub_date.month,
+        year=year,
+        month=month,
         feed=feed,
     )
 
 
 def latest_day(request, feed='910'):
-    latest_episode = Hour.objects.latest('pub_date')
+    try:
+        latest_episode = Hour.objects.latest('pub_date')
+    except ObjectDoesNotExist:
+        return HttpResponseNotFound("No podcasts in the database.")
     return HourDayArchiveView.as_view()(
         request=request,
         year=str(latest_episode.pub_date.year),
@@ -32,7 +43,7 @@ def latest_day(request, feed='910'):
     )
 
 
-def month(request, year=None, month=None, feed='910'):
+def month_calendar(request, year=None, month=None, feed='910'):
     if not year:
         year = datetime.datetime.now().year
         month = datetime.datetime.now().month
