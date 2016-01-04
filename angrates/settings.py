@@ -87,6 +87,11 @@ if 'DB_NAME' in os.environ.keys():
     # running in production
     print '********** PRODUCTION *************'
     DEBUG = False
+    ALLOWED_HOSTS = [
+        '.armstrongandgettybingo.com', # Allow domain and subdomains
+        'www.armstrongandgettybingo.com', # Allow domain and subdomains
+        '.armstrongandgettybingo.com.', # Also allow FQDN and subdomains
+    ]
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.postgresql_psycopg2',
