@@ -40,6 +40,7 @@ class Hour(models.Model):
     link = models.URLField(
         null=True,
         blank=True,
+        max_length=600,
     )
 
     class Meta:
