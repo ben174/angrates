@@ -86,6 +86,7 @@ DATABASES = {
 if 'DB_NAME' in os.environ.keys():
     # running in production
     print '********** PRODUCTION *************'
+    DEBUG = False
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.postgresql_psycopg2',
