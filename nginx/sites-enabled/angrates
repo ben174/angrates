@@ -1,6 +1,5 @@
 server {
-    listen 80;
-    server_name armstrongandgettybingo.com;
+    listen 82;
     charset utf-8;
 
     location /static {
