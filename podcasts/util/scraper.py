@@ -18,8 +18,8 @@ class LogLevels:
 
 class FeedScraper:
     def scrape_650(self):
-        tree = ET.parse('data/650.xml')
-        root = tree.getroot()
+        xml_data = requests.get('http://www.kste.com/podcast/armandgettypodcast.xml').text
+        root = ET.fromstring(xml_data)
         items = root.findall('channel/item')
         future_cutoff = datetime.datetime.now() + datetime.timedelta(days=1)
         for item in items:
@@ -50,8 +50,8 @@ class FeedScraper:
         yield LogLevels.SUCCESS, 'Successfully refreshed feed: 650'
 
     def scrape_910(self):
-        tree = ET.parse('data/910.xml')
-        root = tree.getroot()
+        xml_data = requests.get('http://www.talk910.com/podcast/ang2011.xml').text
+        root = ET.fromstring(xml_data)
         items = root.findall('channel/item')
 
         future_cutoff = datetime.datetime.now() + datetime.timedelta(days=1)
