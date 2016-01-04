@@ -22,7 +22,7 @@ class Hour(models.Model):
     )
 
     title = models.CharField(
-        max_length=200,
+        max_length=600,
     )
 
     description = models.CharField(
@@ -40,6 +40,7 @@ class Hour(models.Model):
     link = models.URLField(
         null=True,
         blank=True,
+        max_length=600,
     )
 
     class Meta:
@@ -75,7 +76,7 @@ class Hour(models.Model):
 
 class Clip(models.Model):
     name = models.CharField(
-        max_length=200,
+        max_length=600,
     )
 
     description = models.CharField(
