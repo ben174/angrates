@@ -57,10 +57,13 @@
     border-left: none;
     border-bottom:none;
 }
+
 .calendar {
     margin-top: 15px;
     border-bottom: solid 1px #ddd;
+    margin-bottom: 10px;
 }
+
 .calendar > .date.weekday-0 {
     border-left: solid 1px #ddd;
 }
@@ -69,7 +72,7 @@
     float: right;
     margin-right: -10px;
 }
-.date>a:first-of-type {
+.date>.hours {
     margin-top: 10px;
 }
 
@@ -109,7 +112,7 @@ div.date.weekday-0 {
     border-left: solid 1px #ddd;
 }
 
-div.date:hover {
+div.date.has-hours:hover {
     background-color: #FFFFDB;
     cursor: pointer;
 }
