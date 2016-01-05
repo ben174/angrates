@@ -20,11 +20,11 @@
         </div>
         <nav>
             <ul class="pager">
-                <li class="previous"><a href="{% url 'archive_month' feed=feed month=previous_month.month year=previous_month.year %}"><span aria-hidden="true">&larr;</span> {{ previous_month|date:"F" }}</a></li>
+                <li class="previous hidden-sm hidden-xs"><a href="{% url 'archive_month' feed=feed month=previous_month.month year=previous_month.year %}"><span aria-hidden="true">&larr;</span> {{ previous_month|date:"F" }}</a></li>
                 <li>
                     {% include "blocks/feed_toggle.html" %}
                 </li>
-                <li class="next"><a href="{% url 'archive_month' feed=feed month=next_month.month year=next_month.year %}">{{ next_month|date:"F" }} <span aria-hidden="true">&rarr;</span></a></li>
+                <li class="next hidden-sm hidden-xs"><a href="{% url 'archive_month' feed=feed month=next_month.month year=next_month.year %}">{{ next_month|date:"F" }} <span aria-hidden="true">&rarr;</span></a></li>
             </ul>
         </nav>
         <div class="row five-cols calendar">
@@ -44,31 +44,28 @@
                 Friday
             </div>
             {% for d in iter %}
-                {% ifchanged d|date:"F" %}
-                    <div class="col-xs-1 date month-header">
-                        {{ d|date:"F" }}
-                    </div>
-                {% endifchanged %}
                 {% if d.weekday != 5 and d.weekday != 6 %}
-                    <div class="col-xs-1 date weekday-{{ d.weekday }}{% if d.month != month.month %} other-month{% endif %}{% if d|date:"F d Y" == today|date:"F d Y" %} today{% endif %}"
-                         onclick="document.location.href='{% url 'archive_day' year=d.year month=d.month day=d.day feed=feed %}';">
+                    {% hours_for d feed as hours %}
+                    <div class="col-xs-1 date weekday-{{ d.weekday }}{% if d.month != month.month %} other-month hidden-sm hidden-xs{% endif %}{% if d|date:"F d Y" == today|date:"F d Y" %} today{% endif %} {% if hours %}has-hours{% else %}empty-date hidden-sm hidden-xs{% endif %}"
+                         {% if hours %}onclick="document.location.href='{% url 'archive_day' year=d.year month=d.month day=d.day feed=feed %}';"{% endif %}>
                         <div class="date-num hidden-xs" data-date="{{ d|date:"F d, Y" }}">{{ d.day }}</div>
                         <div class="date-label hidden-sm hidden-md hidden-lg">{{ d|date:"F d, Y" }}</div>
-                        {% hours_for d feed as hours %}
+                        <div class="hours">
                         {% for hour in hours %}
                             <a class="tiny-label"
                                href="{% url 'archive_day' year=d.year month=d.month day=d.day feed=feed %}?play={{ forloop.counter }}"
                                data-hour-id="{{ hour.id }}" data-toggle="tooltip"
                                title="{{ hour.description }}"><b>{{ hour.pub_date|date:"G A" }}</b> {{ hour.title }}</a>
                         {% endfor %}
+                        </div>
                     </div>
                 {% endif %}
             {% endfor %}
         </div>
-        <nav>
+        <nav class="hidden-md hidden-lg">
             <ul class="pager">
                 <li class="previous"><a href="{% url 'archive_month' feed=feed month=previous_month.month year=previous_month.year %}"><span aria-hidden="true">&larr;</span> {{ previous_month|date:"F, Y" }}</a></li>
-                <li class="next"><a href="{% url 'archive_month' feed=feed month=next_month.month year=next_month.year %}">{{ next_month|date:"F, Y" }}<span aria-hidden="true">&rarr;</span></a></li>
+                <li class="next"><a href="{% url 'archive_month' feed=feed month=next_month.month year=next_month.year %}">{{ next_month|date:"F, Y" }} <span aria-hidden="true">&rarr;</span></a></li>
             </ul>
         </nav>
     </div>

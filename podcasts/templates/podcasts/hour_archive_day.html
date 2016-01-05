@@ -18,14 +18,19 @@
                 <h1>{{ day|date:"F d, Y" }}</h1>
                 <nav>
                     <ul class="pager">
-                        <li class="previous"><a href="{% url 'archive_day' feed=feed month=previous_day.month day=previous_day.day year=previous_day.year %}"><span aria-hidden="true">&larr;</span> {{ previous_day|date:"m/d/y" }}</a></li>
+                        <li class="previous hidden-sm hidden-xs"><a
+                                href="{% url 'archive_day' feed=feed month=previous_day.month day=previous_day.day year=previous_day.year %}"><span
+                                aria-hidden="true">&larr;</span> {{ previous_day|date:"m/d/y" }}</a></li>
                         <li>
                             {% include "blocks/feed_toggle.html" %}
                         </li>
                         {% if next_day %}
-                        <li class="next"><a href="{% url 'archive_day' feed=feed month=next_day.month day=next_day.day year=next_day.year %}"> {{ next_day|date:"m/d/y" }}<span aria-hidden="true">&rarr;</span></a></li>
+                            <li class="next hidden-sm hidden-xs"><a
+                                    href="{% url 'archive_day' feed=feed month=next_day.month day=next_day.day year=next_day.year %}"> {{ next_day|date:"m/d/y" }}
+                                <span aria-hidden="true">&rarr;</span></a></li>
                         {% else %}
-                        <li class="next disabled"><a href="#">Next <span aria-hidden="true">&rarr;</span></a></li>
+                            <li class="next disabled hidden-sm hidden-xs"><a href="#">Next <span
+                                    aria-hidden="true">&rarr;</span></a></li>
                         {% endif %}
                     </ul>
                 </nav>
@@ -51,9 +56,31 @@
                     </div>
                 {% endfor %}
             </div>
-            <div class="col-md-3">
-                <div id="minical" data-src="{% url 'archive_month' feed=feed month=day.month year=day.year %}"></div>
-            </div>
+
+            <ul class="nav nav-pills nav-stacked">
+                <li role="presentation">
+                    <a href="{% url 'archive_day' feed=feed month=previous_day.month day=previous_day.day year=previous_day.year %}">
+                        <span aria-hidden="true">&larr;</span>
+                        {{ previous_day|date:"m/d/y" }}
+                    </a>
+                </li>
+                <li role="presentation">
+                    <a href="{% url 'archive_month' feed=feed month=day.month year=day.year %}">
+                        <i class="fa fa-calendar"></i> Return to Calendar
+                    </a>
+                </li>
+                {% if next_day %}
+                    <li role="presentation">
+                        <a href="{% url 'archive_day' feed=feed month=next_day.month day=next_day.day year=next_day.year %}">
+                            {{ next_day|date:"m/d/y" }}
+                            <span aria-hidden="true">&rarr;</span>
+                        </a>
+                    </li>
+                {% endif %}
+            </ul>
+        </div>
+        <div class="col-md-3">
+            <div id="minical" data-src="{% url 'archive_month' feed=feed month=day.month year=day.year %}"></div>
         </div>
     </div>
 {% endblock %}
@@ -64,6 +91,4 @@
         var selectedDay = "{{ day.timetuple.tm_yday }}";
     </script>
 {% endblock %}
-{% block link_910 %}{% url 'archive_day' year=day.year month=day.month day=day.day feed='910' %}{% endblock %}
-{% block link_650 %}{% url 'archive_day' year=day.year month=day.month day=day.day feed='650' %}{% endblock %}
 
