@@ -45,6 +45,7 @@ class Hour(models.Model):
 
     class Meta:
         ordering = ['pub_date']
+        unique_together = ['feed', 'pub_date']
 
     @classmethod
     def _clean_title(cls, title):
