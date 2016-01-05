@@ -124,7 +124,7 @@ class FeedScraper:
 class ClipScraper:
     def load_clips(self):
         response = requests.get(
-            'https://docs.google.com/spreadsheet/ccc?key=1Gq8ORD1x6DuzkxzAgEblrMUOLsZ3I4OvdWtkl-Vypj8&output=csv')
+            'https://docs.google.com/spreadsheets/d/1Gq8ORD1x6DuzkxzAgEblrMUOLsZ3I4OvdWtkl-Vypj8/export?format=csv')
         if response.status_code != 200:
             yield LogLevels.ERROR, 'Google Docs returned a bad status code: ' + str(response.status_code)
         f = StringIO.StringIO(response.content)
