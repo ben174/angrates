@@ -55,29 +55,29 @@
                         </div>
                     </div>
                 {% endfor %}
-            </div>
-
-            <ul class="nav nav-pills nav-stacked">
-                <li role="presentation">
-                    <a href="{% url 'archive_day' feed=feed month=previous_day.month day=previous_day.day year=previous_day.year %}">
-                        <span aria-hidden="true">&larr;</span>
-                        {{ previous_day|date:"m/d/y" }}
-                    </a>
-                </li>
-                <li role="presentation">
-                    <a href="{% url 'archive_month' feed=feed month=day.month year=day.year %}">
-                        <i class="fa fa-calendar"></i> Return to Calendar
-                    </a>
-                </li>
-                {% if next_day %}
+                <ul class="nav nav-pills nav-justified">
                     <li role="presentation">
-                        <a href="{% url 'archive_day' feed=feed month=next_day.month day=next_day.day year=next_day.year %}">
-                            {{ next_day|date:"m/d/y" }}
-                            <span aria-hidden="true">&rarr;</span>
+                        <a href="{% url 'archive_day' feed=feed month=previous_day.month day=previous_day.day year=previous_day.year %}">
+                            <span aria-hidden="true">&larr;</span>
+                            {{ previous_day|date:"m/d/y" }}
                         </a>
                     </li>
-                {% endif %}
-            </ul>
+                    <li role="presentation">
+                        <a href="{% url 'archive_month' feed=feed month=day.month year=day.year %}">
+                            <i class="fa fa-calendar"></i> Calendar
+                        </a>
+                    </li>
+                    {% if next_day %}
+                        <li role="presentation">
+                            <a href="{% url 'archive_day' feed=feed month=next_day.month day=next_day.day year=next_day.year %}">
+                                {{ next_day|date:"m/d/y" }}
+                                <span aria-hidden="true">&rarr;</span>
+                            </a>
+                        </li>
+                    {% endif %}
+                </ul>
+            </div>
+
         </div>
         <div class="col-md-3">
             <div id="minical" data-src="{% url 'archive_month' feed=feed month=day.month year=day.year %}"></div>

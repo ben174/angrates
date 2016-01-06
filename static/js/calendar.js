@@ -9,7 +9,7 @@ $(function() {
 
 function applyDateClasses() {
     $(".date").each(function(i, item) {
-        $(item).children(".hours").html().trim() == ''
+        $(item).find(".hours").html().trim() == ''
 
     });
 
