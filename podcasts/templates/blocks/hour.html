@@ -1,0 +1,24 @@
+<div class="row hour">
+    <div class="col-sm-1 hour-time" data-time="{{ object.pub_date|date:"G A" }}">
+        <div class="hour-num">
+            {{ object.pub_date|date:"G" }}
+        </div>
+        <div class="meridiem">
+            {{ object.pub_date|date:"A" }}
+        </div>
+    </div>
+    <div class="col-sm-11">
+        <h3>{{ object.title }}</h3>
+        <p>{{ object.description }}</p>
+        <div class="listen">
+            <a href="{{ object.link }}" class="btn btn-primary btn-sm"><i
+                    class="fa fa-volume-up"></i> Listen ({{ object.feed }} feed)</a>
+            {% with object.get_alternate_feeds as alts %}
+                {% for alt in alts %}
+                    <a href="{{ alt.link }}" class="btn btn-default btn-sm"><i
+                            class="fa fa-volume-up"></i> Listen ({{ alt.feed }} feed)</a>
+                {% endfor %}
+            {% endwith %}
+        </div>
+    </div>
+</div>
