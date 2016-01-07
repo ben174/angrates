@@ -1,5 +1,9 @@
 {% extends 'base.html' %}
 {% load staticfiles %}
+{% block posthead %}
+    <link rel="stylesheet" href="{% static 'css/day.css' %}">
+    <link rel="stylesheet" href="{% static 'css/results.css' %}">
+{% endblock %}
 {% block breadcrumbs %}
     <li><a href="/">Home</a></li>
     <li class="active">Search: "{{ query }}"</li>
@@ -19,26 +23,44 @@
             <button type="submit" class="btn btn-default btn-sm">Search</button>
         </form>
         {% if query %}
+        <h2>Clips</h2>
         {% if clips %}
-            <h2>Clips</h2>
-            <ul>
-                {% for clip in clips %}
-                    <li><a href="/clips/{{ clip.key }}">{{ clip.name }}</a> - {{ clip.description }}</li>
-                {% endfor %}
-            </ul>
+            {% for clip in clips %}
+                <div class="row result-row">
+                    <div class="col-sm-3">
+                        <a href="/clips/{{ clip.key }}">
+                            {% if clip.thumbnail_url %}
+                                <img src="{{ clip.thumbnail_url }}" class="img-thumbnail img-responsive  clip-thumbnail">
+                            {% else %}
+                                <img src="{% static 'img/microphone-icon.png' %}"
+                                     class="img-thumbnail img-responsive clip-thumbnail">
+                            {% endif %}
+                        </a>
+                    </div>
+                    <div class="caption col-sm-9">
+                        <h3><a href="/clips/{{ clip.key }}">{{ clip.name }}</a></h3>
+                        <p class="clip-description">
+                            {% if clip.description %}
+                                {{ clip.description }}
+                            {% endif %}
+                        </p>
+                    </div>
+                </div>
+            {% endfor %}
         {% else %}
             <blockquote>No clips found.</blockquote>
         {% endif %}
 
+        <h2>Episodes</h2>
         {% if hours %}
-            <h2>Episodes</h2>
-            <ul>
-                {% for hour in hours %}
-                    <li>
-                        <a href="{% url 'archive_day' year=hour.pub_date.year month=hour.pub_date.month day=hour.pub_date.day feed=hour.feed %}">{{ hour }}</a>
-                        - {{ hour.description }}</li>
-                {% endfor %}
-            </ul>
+            {% for object in hours %}
+                {% ifchanged object.pub_date|date:"F d, Y" %}
+                    <div class="row hour-date-header">
+                        <div class="col-md-12">{{ object.pub_date|date:"F d, Y"  }}</div>
+                    </div>
+                {% endifchanged %}
+                {% include "blocks/hour.html" %}
+            {% endfor %}
         {% else %}
             <blockquote>No episodes found.</blockquote>
         {% endif %}

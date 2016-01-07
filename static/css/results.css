@@ -1,0 +1,17 @@
+
+@media (min-width: 768px) {
+    .hour {
+        margin-left: 20px;
+    }
+    .result-row {
+        margin-left: 20px;
+    }
+    .hour-date-header {
+        margin-left: 20px;
+
+    }
+}
+
+.result-row {
+    margin-bottom: 10px;
+}

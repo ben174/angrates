@@ -10,3 +10,47 @@ div.hour {
 .pager {
     margin-bottom: 20px;
 }
+
+
+@media (max-width: 767px) {
+    .hour-time {
+        border-bottom: solid 1px #CCC;
+        margin-bottom: 12px;
+        background-color: #EEE;
+        margin-top: 10px;
+    }
+    .hour-time>div {
+        display:inline;
+        font-size: 1em;
+        display: inline;
+        font-size: 1.75em;
+        font-weight: bold;
+    }
+}
+@media (min-width: 768px) {
+    .hour-time {
+        text-align: center;
+        border: solid 1px #CCC;
+        border-radius: 60px;
+        background-color: #EEE;
+    }
+
+    .hour-num {
+        font-size: 2.5em;
+        font-weight: bold;
+    }
+
+    .meridiem {
+        margin-top: -8px;
+        margin-bottom: 9px;
+        font-size: 75%;
+    }
+}
+
+
+.hour-date-header {
+    font-size: 1.3em;
+    font-weight: bold;
+    margin-bottom: 12px;
+
+}

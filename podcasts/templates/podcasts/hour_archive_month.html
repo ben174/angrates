@@ -52,7 +52,7 @@
             {% for d in iter %}
                 {% if d.weekday != 5 and d.weekday != 6 %}
                     {% hours_for d feed as hours %}
-                    <div class="col-xs-1 date weekday-{{ d.weekday }}{% if d.month != month.month %} other-month hidden-sm hidden-xs{% endif %}{% if d|date:"F d Y" == today|date:"F d Y" %} today{% endif %} {% if hours %}has-hours{% else %}empty-date hidden-sm hidden-xs{% endif %}"
+                    <div class="col-xs-1 date weekday-{{ d.weekday }}{% if d.month != month.month %} other-month{% endif %}{% if d|date:"F d Y" == today|date:"F d Y" %} today{% endif %} {% if hours %}has-hours{% else %}empty-date hidden-xs{% endif %}"
                          {% if hours %}onclick="document.location.href='{% url 'archive_day' year=d.year month=d.month day=d.day feed=feed %}';"{% endif %}>
                         <div class="date-num hidden-xs" data-date="{{ d|date:"F d, Y" }}">{{ d.day }}</div>
                         <div class="date-label hidden-sm hidden-md hidden-lg">{{ d|date:"F d, Y" }}</div>
