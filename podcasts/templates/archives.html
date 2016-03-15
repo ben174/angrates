@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block breadcrumbs %}
+    <li><a href="/">Home</a></li>
+    <li class="active">Archives</li>
+{% endblock %}
+{% block content %}
+    <div class="container">
+        <h1>Armstrong & Getty Archives</h1>
+
+        <div class="well">
+            <h3>A collection of archived shows from throughout the years.</h3>
+            <p>After scouring the fan base for several years, we've been able to
+                assemble a huge collection of archived shows for the past 15 or so
+                years. It's a large collection, but there are huge chunks missing.
+                If you think you can help complete this collection, please <a href="http://www.bugben.com">contact
+                    me</a>!
+            </p>
+            <p>A <b>huge</b> thanks to <a href="https://twitter.com/star104matt">@star104matt</a>
+                for making a giant contribution of his collection. He offered me up several
+                hundred gigs of shows, very nicely organized, and made this whole process way easier.</p>
+            <h3>Please, don't mass download the entire collection.</h3>
+            <p>If you'd like the entire collection, just contact me and I can arrange to get you the files using
+                a file sharing service. It's very expensive to have someone crawl the entire collection.</p>
+            <h3>Donate</h3>
+            <p>And on the note of money, I'm now accepting donations to help cover the cost of hosting this giant
+                library. It's costing a couple hundred dollars a year to host this site. I've tried to keep costs to a
+                minimum, but now that we have such a giant library, the bills add up.</p>
+            <p>
+            <h4>PayPal</h4>
+            <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+                <input type="hidden" name="cmd" value="_s-xclick">
+                <input type="hidden" name="hosted_button_id" value="3C5A6CQC8S8ZN">
+                <input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donate_SM.gif" border="0"
+                       name="submit" alt="PayPal - The safer, easier way to pay online!">
+                <img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
+            </form>
+            <h4>BitCoin</h4>
+            <div>
+                <a href="bitcoin:1KzTSfqjF2iKCduwz59nv2uqh1W2JsTxZH"> <code>17FJJYY2B11Bx7xx5HepjJ3xAdaB14UMiw</code>
+                </a>
+            </div>
+            </p>
+            <h3>Comments? Suggestions?</h3>
+
+            <p>Join the <a
+                    href="https://www.reddit.com/r/armstrongandgetty/comments/3z7qvs/armstrong_and_getty_podcast_calendar_updated/">discussion
+                on Reddit</a>, or email me (contact info on my <a href="http://www.bugben.com">my home page</a>). </p>
+
+            <h4>KFTC<i>!</i></h4>
+            - <a href="http://www.bugben.com">Ben in San Jose</a><br>
+            You're <i>HUGE</i> in the 'ho!
+        </div>
+    </div>
+{% endblock %}

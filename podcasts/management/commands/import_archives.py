@@ -1,5 +1,6 @@
 import datetime
 
+import urllib
 from django.core.management.base import BaseCommand
 from podcasts.models import Hour
 
@@ -10,13 +11,18 @@ class Command(BaseCommand):
     def add_arguments(self, parser):
         parser.add_argument('--year',
             action='store',
-            default='2002',
+            default='all',
             help='Year to import')
 
     def handle(self, *args, **options):
-        self.import_sheet('data/archive-sheets/2002.csv')
+        years = ['2002', '2003', '2004', '2005', '2006']
+        if options['year'] != 'all':
+            years = [options['year']]
+        for year in years:
+            self.import_sheet(year)
 
-    def import_sheet(self, filename):
+    def import_sheet(self, year):
+        filename = 'data/archive-sheets/{}.csv'.format(year)
         with open(filename) as f:
             lines = f.readlines()
             for line in lines:
@@ -24,6 +30,11 @@ class Command(BaseCommand):
                 if cells[0] == 'Filename':
                     # header cell
                     continue
+
+                filename = cells[0].strip()
+                if filename.startswith('./'):
+                    filename = filename[2:]
+
                 date_string = cells[1].strip()
                 time_string = cells[2].strip()
                 title = cells[3].strip()
@@ -31,6 +42,8 @@ class Command(BaseCommand):
                 description = cells[5].strip()
                 best_of = cells[6].strip() == 'x'
                 link = cells[7].strip()
+                filename = urllib.quote(filename)
+                link = 'https://storage.googleapis.com/ang-archives/{}/{}'.format(year, filename)
 
                 try:
                     m, d, y = [int(x) for x in date_string.split('/')]

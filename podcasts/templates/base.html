@@ -50,7 +50,8 @@
                 {% else %}
                 <li><a href="/"><i class="fa fa-calendar"></i> Calendar</a></li>
                 {% endif %}
-                <li><a href="{% url 'clips' %}"><i class="fa fa-video-camera"></i> Clip Gallery</a></li>
+                <li class="hidden-sm hidden-xs"><a href="{% url 'clips' %}"><i class="fa fa-video-camera"></i> Clip Gallery</a></li>
+                <li class="nav-new"><a href="{% url 'archives' %}"><i class="fa fa-archive"></i> Archives</a></li>
                 <li><a href="{% url 'search' %}"><i class="fa fa-search"></i> Search</a></li>
                 <li><a href="{% url 'about' %}"><i class="fa fa-info-circle"></i> About</a></li>
             </ul>
@@ -74,6 +75,8 @@
                 </ul>
             {% endif %}
         </div><!-- /.navbar-collapse -->
+
+
     </div><!-- /.container-fluid -->
 </nav>
 
@@ -97,6 +100,27 @@
         <button type="submit" class="btn btn-default btn-sm">Search</button>
     </form>
 </nav>
+
+
+<div class="clearfix">
+<nav id="yearnav">
+    <ul class="nav">
+        <li>
+            <ol class="breadcrumb breadcrumb-years">
+                <li><b>NEW:</b> Armstrong & Getty Archives:</li>
+                <li><a href="/650/2002/1">2002</a></li>
+                <li><a href="/650/2003/1">2003</a></li>
+                <li><a href="/650/2004/1">2004</a></li>
+                <li><a href="/650/2005/1">2005</a></li>
+                <li><a href="/650/2006/1">2006</a></li>
+            </ol>
+        </li>
+    </ul>
+</nav>
+</div>
+
+
+
 {% block content %}{% endblock %}
 <footer class="footer">
     <div class="container-fluid">

@@ -47,10 +47,17 @@
     margin-top: 2px;
     margin-right: 0px; }
 
+#yearnav {
+  background-color: #DCE4C5;
+  border-top: solid 1px #BBB; }
+
 .breadcrumb {
   background-color: inherit;
   margin-left: 108px;
   margin-bottom: 0px; }
+
+.breadcrumb-years {
+  margin-left: 0px; }
 
 .navbar-brand img {
   width: 100px;
