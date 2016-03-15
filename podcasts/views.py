@@ -190,6 +190,8 @@ def minical(request, feed='910', year=None, month=None):
         'next_month': next_month,
     })
 
+def archives(request):
+    return render(request, 'archives.html')
 
 def about(request):
     return render(request, 'about.html')
