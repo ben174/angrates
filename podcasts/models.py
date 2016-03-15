@@ -43,6 +43,10 @@ class Hour(models.Model):
         max_length=600,
     )
 
+    best_of = models.BooleanField(
+        default=False,
+    )
+
     class Meta:
         ordering = ['pub_date']
         unique_together = ['feed', 'pub_date']
