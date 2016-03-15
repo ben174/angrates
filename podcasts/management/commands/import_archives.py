@@ -3,8 +3,6 @@ import datetime
 from django.core.management.base import BaseCommand
 from podcasts.models import Hour
 
-from podcasts.util.scraper import FeedScraper, LogLevels
-
 
 class Command(BaseCommand):
     help = 'Imports archives from spreadsheets'
@@ -16,7 +14,10 @@ class Command(BaseCommand):
             help='Year to import')
 
     def handle(self, *args, **options):
-        with open('data/archive-sheets/2002.csv') as f:
+        self.import_sheet('data/archive-sheets/2002.csv')
+
+    def import_sheet(self, filename):
+        with open(filename) as f:
             lines = f.readlines()
             for line in lines:
                 cells = line.split(',')
@@ -59,4 +60,3 @@ class Command(BaseCommand):
                 hour.description = description
                 hour.best_of = best_of
                 hour.save()
-
