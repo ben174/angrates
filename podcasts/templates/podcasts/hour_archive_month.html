@@ -16,6 +16,9 @@
             <div class="col-lg-12 text-center">
                 <h1 class="hidden-xs">Armstrong & Getty Podcasts</h1>
                 <h2>{{ month|date:"F, Y" }}</h2>
+                {% if has_alt %}
+                    <div class="hidden" id="alt-notice"><h4 class="warning">No episodes in this view. There are more shows available in the <a href="{{ alt_link }}">alternate feed</a>.</h4></div>
+                {% endif %}
             </div>
         </div>
         <nav>

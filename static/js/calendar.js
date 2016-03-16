@@ -5,6 +5,9 @@ $(function() {
         }
     );
     applyDateClasses();
+    if($("div.hours>a").length==0) {
+        $("#alt-notice").removeClass("hidden");
+    }
 });
 
 function applyDateClasses() {
