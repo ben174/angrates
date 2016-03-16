@@ -56,25 +56,24 @@ def month_calendar(request, year=None, month=None, feed='910'):
     month = date.month
     hcal = calendar.HTMLCalendar(6)
     iter = hcal.itermonthdates(year, month)
-    object_list = Hour.objects.filter()
     today = datetime.date(
         datetime.datetime.now().year,
         datetime.datetime.now().month,
         datetime.datetime.now().day,
     )
-
     alt_feed = '650' if feed == '910' else '910'
     alt_link = reverse('archive_month', kwargs={
         'feed': alt_feed,
         'year': year,
         'month': month
     })
+    has_alt = Hour.objects.filter(pub_date__gte=date, pub_date__lt=next_month, feed=alt_feed)
     return render(request, 'podcasts/hour_archive_month.html', {
         'iter': iter,
         'hcal': hcal,
-        'object_list': object_list,
         'feed': feed,
         'month': date,
+        'has_alt': has_alt,
         'previous_month': previous_month,
         'next_month': next_month,
         'today': today,

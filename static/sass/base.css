@@ -51,6 +51,9 @@
   background-color: #DCE4C5;
   border-top: solid 1px #BBB; }
 
+h4.warning {
+  color: #900; }
+
 .breadcrumb {
   background-color: inherit;
   margin-left: 108px;
