@@ -6,6 +6,8 @@ h3 {
 }
 div.hour {
     margin-bottom: 20px;
+    border-bottom: solid 1px #AAA;
+    padding-bottom: 20px;
 }
 .pager {
     margin-bottom: 20px;
