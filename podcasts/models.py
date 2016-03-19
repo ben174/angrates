@@ -3,6 +3,7 @@ from __future__ import unicode_literals
 import re
 import urlparse
 
+from django.contrib.auth.models import User
 from django.db import models
 
 
@@ -141,3 +142,35 @@ class Clip(models.Model):
 
     def __unicode__(self):
         return self.key
+
+
+class Comment(models.Model):
+    user = models.ForeignKey(User)
+    hour = models.ForeignKey(Hour)
+    text = models.TextField(max_length=5000)
+    created_date = models.DateTimeField(auto_now_add=True)
+    modified_date = models.DateTimeField(auto_now=True)
+
+    def __unicode__(self):
+        return '{}: {}'.format(self.user, self.text)
+
+
+class Rating(models.Model):
+    user = models.ForeignKey(User)
+    hour = models.ForeignKey(Hour)
+    rating = models.DecimalField(decimal_places=2, max_digits=4)
+    created_date = models.DateTimeField(auto_now_add=True)
+    modified_date = models.DateTimeField(auto_now=True)
+
+    def __unicode__(self):
+        return '{}: {}'.format(self.user, self.rating)
+
+
+class AnonymousRating(models.Model):
+    hour = models.ForeignKey(Hour)
+    rating = models.DecimalField(decimal_places=2, max_digits=4)
+    created_date = models.DateTimeField(auto_now_add=True)
+    source_ip = models.GenericIPAddressField()
+
+    def __unicode__(self):
+        return 'Anonymous Rating: {}'.format(self.rating)
