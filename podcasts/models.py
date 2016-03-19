@@ -174,3 +174,9 @@ class AnonymousRating(models.Model):
 
     def __unicode__(self):
         return 'Anonymous Rating: {}'.format(self.rating)
+
+class Listen(models.Model):
+    user = models.ForeignKey(User)
+    hour = models.ForeignKey(Hour)
+    listen_date = models.DateTimeField(auto_now_add=True)
+    source_ip = models.GenericIPAddressField()

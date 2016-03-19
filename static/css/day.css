@@ -56,3 +56,7 @@ div.hour {
     margin-bottom: 12px;
 
 }
+
+.rating {
+    float: right;
+}
