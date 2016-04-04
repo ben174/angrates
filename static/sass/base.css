@@ -50,6 +50,18 @@
 #yearnav {
   background-color: #DCE4C5;
   border-top: solid 1px #BBB; }
+  #yearnav #archive-note {
+    float: right; }
+    #yearnav #archive-note:before {
+      content: ""; }
+    #yearnav #archive-note a {
+      color: #A00; }
+
+.editor-call {
+  background-color: #EDD;
+  padding: 10px; }
+  .editor-call h3 {
+    margin-top: 0px; }
 
 h4.warning {
   color: #900; }
