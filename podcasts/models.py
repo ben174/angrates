@@ -23,14 +23,17 @@ class Hour(models.Model):
 
     title = models.CharField(
         max_length=600,
+        help_text="A short title for this segment. Shown in calendar view.",
     )
 
     description = models.CharField(
         max_length=500,
+        help_text="A longer description of this segment. Only shown in day view.",
     )
 
     summary = models.CharField(
         max_length=500,
+        help_text="NOT CURRENTLY USED",
     )
 
     duration = models.CharField(
@@ -43,10 +46,12 @@ class Hour(models.Model):
         null=True,
         blank=True,
         max_length=600,
+        help_text="Download URL",
     )
 
     best_of = models.BooleanField(
         default=False,
+        help_text="Indicates this is a Best Of show, which is a compliation of segments from previous shows.",
     )
 
     class Meta:
