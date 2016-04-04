@@ -67,9 +67,12 @@ class Command(BaseCommand):
                     description = summary
 
                 hour, created = Hour.objects.get_or_create(pub_date=date, feed='650')
-                hour.link = link
-                hour.title = summary
-                hour.summary = summary
-                hour.description = description
-                hour.best_of = best_of
-                hour.save()
+                if created:
+                    hour.link = link
+                    hour.title = summary
+                    hour.summary = summary
+                    hour.description = description
+                    hour.best_of = best_of
+                    hour.save()
+                else:
+                    print 'Hour already exists: {}'.format(date)

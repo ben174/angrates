@@ -35,6 +35,8 @@ class Hour(models.Model):
 
     duration = models.CharField(
         max_length=20,
+        null=True,
+        blank=True,
     )
 
     link = models.URLField(

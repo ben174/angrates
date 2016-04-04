@@ -9,7 +9,9 @@
     </div>
     <div class="col-sm-11">
         <h3>{{ object.title }}</h3>
-        <p>{{ object.description }}</p>
+        <p>
+            {{ object.description }}
+        </p>
         <div class="listen">
             <a href="{{ object.link }}" class="btn btn-primary btn-sm"><i
                     class="fa fa-volume-up"></i> Listen ({{ object.feed }} feed)</a>
@@ -19,6 +21,11 @@
                             class="fa fa-volume-up"></i> Listen ({{ alt.feed }} feed)</a>
                 {% endfor %}
             {% endwith %}
+        </div>
+        <div class="edit pull-right">
+            {% if request.user.is_superuser %}
+                <a href="{% url 'admin:podcasts_hour_change' object.pk %}" class="btn btn-danger btn-xs">Edit</a>
+            {% endif %}
         </div>
     </div>
 </div>

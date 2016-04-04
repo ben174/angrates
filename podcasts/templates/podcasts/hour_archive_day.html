@@ -19,9 +19,11 @@
                 <nav>
                     <ul class="pager">
                         <li class="previous hidden-sm hidden-xs">
+                            {% if previous_day %}
                             <a href="{% url 'archive_day' feed=feed month=previous_day.month day=previous_day.day year=previous_day.year %}">
                                 <span aria-hidden="true">&larr;</span> {{ previous_day|date:"m/d/y" }}
                             </a>
+                            {% endif %}
                         </li>
                         <li>
                             {% include "blocks/feed_toggle.html" %}
@@ -44,10 +46,12 @@
                 {% endfor %}
                 <ul class="nav nav-pills nav-justified">
                     <li role="presentation">
+                        {% if previous_day %}
                         <a href="{% url 'archive_day' feed=feed month=previous_day.month day=previous_day.day year=previous_day.year %}">
                             <span aria-hidden="true">&larr;</span>
                             {{ previous_day|date:"m/d/y" }}
                         </a>
+                        {% endif %}
                     </li>
                     <li role="presentation">
                         <a href="{% url 'archive_month' feed=feed month=day.month year=day.year %}">
