@@ -49,10 +49,12 @@ div.hour {
     }
 }
 
-
 .hour-date-header {
     font-size: 1.3em;
     font-weight: bold;
     margin-bottom: 12px;
+}
 
+.edit {
+    margin-top: -22px
 }
