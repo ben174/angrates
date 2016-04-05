@@ -6,12 +6,14 @@ from django.core.urlresolvers import reverse
 from django.http import HttpResponse, HttpResponseNotFound
 from django.shortcuts import render, get_object_or_404
 from django.views.generic.dates import MonthArchiveView, DayArchiveView
+
+from angrates import settings
 from podcasts.models import Hour, Clip
 from podcasts.util import search as search_util
 from podcasts.util.scraper import FeedScraper, ClipScraper
 
 
-def home(request, feed='910'):
+def home(request, feed=settings.DEFAULT_FEED):
     year = datetime.datetime.now().year
     month = datetime.datetime.now().month
     try:
@@ -29,7 +31,7 @@ def home(request, feed='910'):
     )
 
 
-def latest_day(request, feed='910'):
+def latest_day(request, feed=settings.DEFAULT_FEED):
     try:
         latest_episode = Hour.objects.latest('pub_date')
     except ObjectDoesNotExist:
@@ -43,7 +45,7 @@ def latest_day(request, feed='910'):
     )
 
 
-def month_calendar(request, year=None, month=None, feed='910'):
+def month_calendar(request, year=None, month=None, feed=settings.DEFAULT_FEED):
     if not year:
         year = datetime.datetime.now().year
         month = datetime.datetime.now().month
@@ -86,7 +88,7 @@ class HourMonthArchiveView(MonthArchiveView):
     date_field = "pub_date"
     allow_future = True
     month_format = '%m'
-    feed = '910'
+    feed = settings.DEFAULT_FEED
 
     def get_context_data(self, **kwargs):
         context = super(HourMonthArchiveView, self).get_context_data(**kwargs)
@@ -112,7 +114,7 @@ class HourDayArchiveView(DayArchiveView):
     date_field = 'pub_date'
     allow_future = True
     month_format = '%m'
-    feed = '910'
+    feed = settings.DEFAULT_FEED
 
     def get_queryset(self):
         return Hour.objects.filter(feed=self.kwargs['feed'])
