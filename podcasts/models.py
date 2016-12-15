@@ -118,6 +118,8 @@ class Hour(models.Model):
 
 @receiver(post_save, sender=Hour)
 def reddit_discussion(sender, instance, **kwargs):
+    # no op
+    return
     airdate = instance.get_airdate()
     red = reddit.Reddit(airdate)
     red.connect()
@@ -125,9 +127,6 @@ def reddit_discussion(sender, instance, **kwargs):
         red.update_post()
     else:
         red.create_post()
-
-    import pdb
-    pdb.set_trace()
 
 
 class Clip(models.Model):
