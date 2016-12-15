@@ -49,7 +49,6 @@ class Reddit:
         body = self.get_body()
 
         subreddit = 'ArmstrongAndGetty'
-        subreddit = 'test'
 
         submission = self.reddit.subreddit(subreddit).submit(title, selftext=body)
         self.airdate.reddit_post_id = submission.id
