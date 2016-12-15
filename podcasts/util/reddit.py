@@ -29,7 +29,7 @@ class Reddit:
                 hour.pub_date.year,
                 hour.pub_date.month,
                 hour.pub_date.day,
-                index,
+                index+1,
             )
             body += '**{}:00 - [{}]({})**\n\n{}\n\n\n\n'.format(
                 hour.pub_date.hour,
@@ -38,7 +38,7 @@ class Reddit:
                 hour.description,
             )
 
-        footer = ("I'm a freaky-deeky bot. I'll show you SOURCELINK my source if you "
+        footer = ("I'm a freaky-deeky bot. I'll show you SOURCELINK if you "
                   "show me yours. I'm made by /u/ben174 @ http://www.bugben.com and my home is "
                   "http://www.armstrongandgettybingo.com - a searchable site full of Armstrong and Getty "
                   "podcasts and clips and other goodness dating back to 2001.")
@@ -46,7 +46,7 @@ class Reddit:
 
         # superscript it
         footer = ' ^'.join(footer.split(' '))
-        footer.replace('SOURCELINK', '[^my ^source](https://github.com/ben174/angrates)')
+        footer = footer.replace('SOURCELINK', '[^my ^source](https://github.com/ben174/angrates)')
         body += '________________________________\n\n^' + footer
         print body
         return body
