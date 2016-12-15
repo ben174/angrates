@@ -52,7 +52,7 @@ class Reddit:
         return body
 
     def create_post(self):
-        title = '[AnG] Daily Discussion Thread for {}/{}/{}'.format(
+        title = '[A&G] Daily Discussion Thread for {}/{}/{}'.format(
             self.airdate.pub_date.month,
             self.airdate.pub_date.day,
             self.airdate.pub_date.year,
