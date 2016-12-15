@@ -2,8 +2,34 @@ from __future__ import unicode_literals
 
 import re
 import urlparse
+import datetime
 
 from django.db import models
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+
+from podcasts.util import reddit
+
+
+class AirDate(models.Model):
+    pub_date = models.DateField(unique=True)
+    reddit_post_id = models.CharField(max_length=20, null=True, blank=True)
+    reddit_url = models.URLField(max_length=255, null=True, blank=True)
+
+    def get_hours(self):
+        base_date = datetime.date(
+            self.pub_date.year,
+            self.pub_date.month,
+            self.pub_date.day,
+        )
+        hours = Hour.objects.filter(
+            pub_date__gte=base_date,
+            pub_date__lt=base_date+datetime.timedelta(days=1)
+        ).order_by('pub_date')
+        return hours
+
+    def __unicode__(self):
+        return str(self.pub_date)
 
 
 class Hour(models.Model):
@@ -13,6 +39,7 @@ class Hour(models.Model):
     )
 
     pub_date = models.DateTimeField()
+    air_date = models.ForeignKey(AirDate, null=True, blank=True)
 
     feed = models.CharField(
         max_length=3,
@@ -69,6 +96,10 @@ class Hour(models.Model):
     def get_alternate_feeds(self):
         return Hour.objects.filter(pub_date=self.pub_date).exclude(pk=self.pk)
 
+    def get_airdate(self):
+        air_date, _ = AirDate.objects.get_or_create(pub_date=self.pub_date)
+        return air_date
+
     def save(self, *args, **kwargs):
         self.title = Hour._clean_title(self.title)
         super(Hour, self).save(*args, **kwargs)
@@ -84,6 +115,19 @@ class Hour(models.Model):
             self.feed,
             title
         )
+
+@receiver(post_save, sender=Hour)
+def reddit_discussion(sender, instance, **kwargs):
+    airdate = instance.get_airdate()
+    red = reddit.Reddit(airdate)
+    red.connect()
+    if airdate.reddit_post_id:
+        red.update_post()
+    else:
+        red.create_post()
+
+    import pdb
+    pdb.set_trace()
 
 
 class Clip(models.Model):

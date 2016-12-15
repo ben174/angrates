@@ -1,5 +1,7 @@
 from django.core.management.base import BaseCommand
 
+from podcasts.models import FeedScraper
+from podcasts.util import reddit
 from podcasts.util.scraper import FeedScraper, LogLevels
 
 
@@ -28,4 +30,10 @@ class Command(BaseCommand):
             for log_line in scrape():
                 self.stdout.write(level_mapping[log_line[0]](log_line[1]))
 
-
+        airdate = AirDate.objects.latest()
+        red = reddit.Reddit(airdate)
+        red.connect()
+        if airdate.reddit_post_id:
+            red.update_post()
+        else:
+            red.create_post()

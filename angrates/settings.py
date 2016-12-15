@@ -138,6 +138,10 @@ USE_TZ = False
 DEFAULT_FEED = '650'
 
 
+REDDIT_CLIENT_SECRET = os.environ['REDDIT_CLIENT_SECRET']
+REDDIT_PASSWORD = os.environ['REDDIT_PASSWORD']
+
+
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.9/howto/static-files/
 STATICFILES_DIRS = [
