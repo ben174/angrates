@@ -83,7 +83,12 @@ DATABASES = {
     }
 }
 
+REDDIT_CLIENT_SECRET = None
+REDDIT_PASSWORD = None
+
 if 'DB_NAME' in os.environ.keys():
+    REDDIT_CLIENT_SECRET = os.environ['REDDIT_CLIENT_SECRET']
+    REDDIT_PASSWORD = os.environ['REDDIT_PASSWORD']
     # running in production
     print '********** PRODUCTION *************'
     DEBUG = False
@@ -138,8 +143,6 @@ USE_TZ = False
 DEFAULT_FEED = '650'
 
 
-REDDIT_CLIENT_SECRET = os.environ['REDDIT_CLIENT_SECRET']
-REDDIT_PASSWORD = os.environ['REDDIT_PASSWORD']
 
 
 # Static files (CSS, JavaScript, Images)
