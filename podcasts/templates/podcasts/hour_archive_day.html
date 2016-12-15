@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load staticfiles %}
+{% load hours %}
 {% block metadescription %}Armstrong and Getty Podcasts for {{ day|date:"M d, Y" }}{% endblock %}
 {% block subtitle %}Podcasts for {{ day|date:"M d, Y" }}{% endblock %}
 {% block posthead %}
@@ -70,6 +71,12 @@
             </div>
             <div class="col-md-3">
                 <div id="minical" data-src="{% url 'archive_month' feed=feed month=day.month year=day.year %}"></div>
+                {% airdate_for day as airdate %}
+                {% if airdate and airdate.reddit_url %}
+                <i class="fa fa-comments" aria-hidden="true"></i> <a href="{{ airdate.reddit_url }}">Join the discussion for this day on the Armstrong and Getty subreddit.</a>
+                {% endif %}
+                </div>
+                
             </div> <!-- /col-md-3 (calendar) -->
         </div> <!-- /row -->
     </div> <!-- /container -->

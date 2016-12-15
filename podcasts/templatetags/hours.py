@@ -1,7 +1,7 @@
 import datetime
 from django import template
 
-from podcasts.models import Hour
+from podcasts.models import Hour, AirDate
 
 register = template.Library()
 
@@ -19,6 +19,16 @@ def hours_for(date, feed):
         pub_date__year=date.year,
         feed=feed,
     )
+
+@register.simple_tag
+def airdate_for(date):
+    try:
+        return AirDate.objects.get(pub_date=date)
+    except AirDate.DoesNotExist:
+        return None
+
+
+
 
 @register.simple_tag
 def has_hours(date):

@@ -118,9 +118,9 @@ class Hour(models.Model):
 
 @receiver(post_save, sender=Hour)
 def reddit_discussion(sender, instance, **kwargs):
-    # no op
-    return
     airdate = instance.get_airdate()
+    return
+
     red = reddit.Reddit(airdate)
     red.connect()
     if airdate.reddit_post_id:

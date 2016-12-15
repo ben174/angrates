@@ -66,6 +66,10 @@
                                data-hour-id="{{ hour.id }}" data-toggle="tooltip"
                                title="{{ hour.description }}"><b>{{ hour.pub_date|date:"G A" }}</b> {{ hour.title }}</a>
                         {% endfor %}
+                        {% airdate_for d as airdate %}
+                        {% if airdate and airdate.reddit_url %}
+                        <a class="tiny-label" href="{{ airdate.reddit_url }}"><i class="fa fa-comments" aria-hidden="true"></i> Daily Discussion</a>
+                        {% endif %}
                         </div>
                     </div>
                 {% endif %}
