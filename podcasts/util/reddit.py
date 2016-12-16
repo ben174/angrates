@@ -46,7 +46,7 @@ class Reddit:
 
         # superscript it
         footer = ' ^'.join(footer.split(' '))
-        footer = footer.replace('SOURCELINK', '[^my ^source](https://github.com/ben174/angrates)')
+        footer = footer.replace('^SOURCELINK', '[^my ^source](https://github.com/ben174/angrates)')
         body += '________________________________\n\n^' + footer
         print body
         return body
@@ -67,4 +67,6 @@ class Reddit:
 
     def update_post(self):
         submission = self.reddit.submission(self.airdate.reddit_post_id)
-        submission.edit(self.get_body())
+        body = self.get_body()
+        if submission.selftext != body:
+            submission.edit(self.get_body())
