@@ -22,7 +22,7 @@ class Reddit:
         )
 
     def get_body(self):
-        body = 'Topics include:\n\n'
+        body = '# Topics include:\n\n'
         for index, hour in enumerate(self.airdate.get_hours()):
             url = 'http://www.armstrongandgettybingo.com/{}/{}/{}/{}/?play={}'.format(
                 hour.feed,
