@@ -6,6 +6,7 @@ gunicorn==19.6.0
 oauthlib==2.0.1
 praw==4.0.0
 prawcore==0.3.0
+psycopg2==2.6
 python-twitter==3.2
 redis==2.10.5
 requests==2.12.4
