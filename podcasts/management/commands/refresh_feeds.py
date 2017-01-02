@@ -1,4 +1,6 @@
-from podcasts.models import AirDate
+import datetime
+
+from podcasts.models import AirDate, Hour
 from django.core.management.base import BaseCommand
 
 from podcasts.util.scraper import FeedScraper, LogLevels
@@ -37,3 +39,18 @@ class Command(BaseCommand):
             red.update_post()
         else:
             red.create_post()
+
+        tweet_date = datetime.date.today()
+
+        untweeted_hours = Hour.objects.filter(
+            tweeted=False,
+            pub_date__gte=tweet_date,
+            pub_date__lt=tweet_date + datetime.timedelta(days=1)
+        ).order_by('pub_date')
+
+        from podcasts.util import tweet
+        twitter = tweet.Twitter()
+        twitter.connect()
+        for hour in untweeted_hours:
+            print 'Tweeting hour: {}'.format(hour)
+            twitter.post_hour(hour)

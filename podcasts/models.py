@@ -81,9 +81,15 @@ class Hour(models.Model):
         help_text="Indicates this is a Best Of show, which is a compliation of segments from previous shows.",
     )
 
+    tweeted = models.BooleanField(
+        default=False,
+        help_text="Indicates whether a tweet has been sent out announcing this hour.",
+    )
+
     class Meta:
         ordering = ['pub_date']
         unique_together = ['feed', 'pub_date']
+        get_latest_by = 'pub_date'
 
     @classmethod
     def _clean_title(cls, title):
@@ -92,6 +98,15 @@ class Hour(models.Model):
         title = re.sub(r"^[0-9]*\-[0-9]*\-[0-9]*\s(.*)$", "\g<1>", title)
         title = re.sub(r"(?i)^(?i)[0-9]\s?[AP]M[\s\-]+(.*)$", "\g<1>", title)
         return title
+
+    def get_bingo_url(self):
+        return 'http://www.armstrongandgettybingo.com/{}/{}/{}/{}/?play={}'.format(
+            self.feed,
+            self.pub_date.year,
+            self.pub_date.month,
+            self.pub_date.day,
+            self.pub_date.hour-5,
+        )
 
     def get_alternate_feeds(self):
         return Hour.objects.filter(pub_date=self.pub_date).exclude(pk=self.pk)
@@ -115,18 +130,6 @@ class Hour(models.Model):
             self.feed,
             title
         )
-
-@receiver(post_save, sender=Hour)
-def reddit_discussion(sender, instance, **kwargs):
-    airdate = instance.get_airdate()
-    return
-
-    red = reddit.Reddit(airdate)
-    red.connect()
-    if airdate.reddit_post_id:
-        red.update_post()
-    else:
-        red.create_post()
 
 
 class Clip(models.Model):

@@ -1,8 +1,15 @@
+decorator==4.0.10
 Django==1.10.4
 django-debug-toolbar==1.6
+future==0.16.0
 gunicorn==19.6.0
+oauthlib==2.0.1
+praw==4.0.0
+prawcore==0.3.0
+python-twitter==3.2
 redis==2.10.5
 requests==2.12.4
+requests-oauthlib==0.7.0
+six==1.10.0
 sqlparse==0.2.2
-psycopg2==2.6
-praw==4.0.0
+update-checker==0.15
