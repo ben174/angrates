@@ -194,3 +194,8 @@ class Clip(models.Model):
 
     def __unicode__(self):
         return self.key
+
+
+@receiver(post_save, sender=Hour)
+def create_airdate(sender, instance, **kwargs):
+    airdate = instance.get_airdate()
