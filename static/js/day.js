@@ -2,9 +2,15 @@ $(function() {
     $("div.listen>a").click(linkToPlayer);
     if(QueryString.play!=undefined) {
         $("a.btn-primary")[parseInt(QueryString.play)-1].click();
+        if(QueryString.time!=undefined) {
+          setTimeout(jumpToTime, 1000)
+        }
     }
-
 });
+
+function jumpToTime() {
+    $("audio")[0].currentTime=parseInt(QueryString.time)
+}
 
 function linkToPlayer(e) {
     var link = $(e.target).attr('href');
