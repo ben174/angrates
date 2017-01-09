@@ -28,7 +28,7 @@ class Twitter:
 
         POST_LENGTH = 140
 
-        body = '<BOD>\n----\nListen @ {}'.format(tiny_url)
+        body = '<BOD>\n----\nListen @ {} @AandGShow'.format(tiny_url)
         short_desc = hour.description[:POST_LENGTH-(len(body) - 5)]
         body = body.replace('<BOD>', short_desc)
 
