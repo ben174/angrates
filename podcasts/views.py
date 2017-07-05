@@ -231,7 +231,7 @@ def rss(request):
     fg.subtitle('Armstrong and Getty Bingo')
     fg.link( href='http://www.armstrongandgettybingo.com/rss', rel='self' )
     fg.language('en')
-    for hour in Hour.objects.all():
+    for hour in Hour.objects.all().order_by('pub_date'):
         fe = fg.add_entry()
         fe.id(hour.link)
         fe.title(hour.title)
