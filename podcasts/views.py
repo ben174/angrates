@@ -1,5 +1,6 @@
 import datetime
 import calendar
+import pytz
 
 from django.core.exceptions import ObjectDoesNotExist
 from django.core.urlresolvers import reverse
@@ -231,10 +232,13 @@ def rss(request):
     fg.subtitle('Armstrong and Getty Bingo')
     fg.link( href='http://www.armstrongandgettybingo.com/rss', rel='self' )
     fg.language('en')
+    pacific = pytz.timezone('America/Los_Angeles')
+
     for hour in Hour.objects.all().order_by('pub_date'):
         fe = fg.add_entry()
         fe.id(hour.link)
         fe.title(hour.title)
         fe.description(hour.description)
         fe.enclosure(hour.link, 0, 'audio/mpeg')
+        fe.published(pacific.localize(hour.pub_date))
     return HttpResponse(fg.rss_str(pretty=True), content_type='application/rss+xml')

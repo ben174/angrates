@@ -11,6 +11,7 @@ prawcore==0.3.0
 psycopg2==2.6
 python-dateutil==2.6.0
 python-twitter==3.2
+pytz==2017.2
 redis==2.10.5
 requests==2.12.4
 requests-oauthlib==0.7.0
