@@ -234,7 +234,7 @@ def rss(request):
     fg.language('en')
     pacific = pytz.timezone('America/Los_Angeles')
 
-    for hour in Hour.objects.all().order_by('pub_date'):
+    for hour in Hour.objects.all().order_by('-pub_date'):
         fe = fg.add_entry()
         fe.id(hour.link)
         fe.title(hour.title)
