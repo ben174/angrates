@@ -6,6 +6,7 @@ from django.core.urlresolvers import reverse
 from django.http import HttpResponse, HttpResponseNotFound
 from django.shortcuts import render, get_object_or_404
 from django.views.generic.dates import MonthArchiveView, DayArchiveView
+from feedgen.feed import FeedGenerator
 
 from angrates import settings
 from podcasts.models import Hour, Clip
@@ -216,3 +217,24 @@ def search(request):
 
 def robots(request):
     return HttpResponse('User-agent: *\nDisallow:', content_type='text/plain')
+
+
+def rss(request):
+    fg = FeedGenerator()
+    fg.load_extension('podcast')
+    fg.id('http://www.armstrongandgettybingo.com/rss')
+    fg.podcast.itunes_category('News & Politics', 'Conservative (Right)')
+    fg.title('The Armstrong and Getty Show (Bingo)')
+    fg.author( {'name':'Ben Friedland','email':'ben@bugben.com'} )
+    fg.link( href='http://www.armstrongandgettybingo.com', rel='alternate' )
+    fg.logo('http://www.armstrongandgettybingo.com/static/img/logo.png')
+    fg.subtitle('Armstrong and Getty Bingo')
+    fg.link( href='http://www.armstrongandgettybingo.com/rss', rel='self' )
+    fg.language('en')
+    for hour in Hour.objects.all():
+        fe = fg.add_entry()
+        fe.id(hour.link)
+        fe.title(hour.title)
+        fe.description(hour.description)
+        fe.enclosure(hour.link, 0, 'audio/mpeg')
+    return HttpResponse(fg.rss_str(pretty=True), content_type='application/rss+xml')
