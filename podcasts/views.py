@@ -7,6 +7,7 @@ from django.core.urlresolvers import reverse
 from django.http import HttpResponse, HttpResponseNotFound
 from django.shortcuts import render, get_object_or_404
 from django.views.generic.dates import MonthArchiveView, DayArchiveView
+from django.views.decorators.cache import cache_page
 from feedgen.feed import FeedGenerator
 
 from angrates import settings
@@ -221,6 +222,7 @@ def robots(request):
     return HttpResponse('User-agent: *\nDisallow:', content_type='text/plain')
 
 
+@cache_page(60 * 60)
 def rss(request):
     fg = FeedGenerator()
     fg.load_extension('podcast')
@@ -232,6 +234,7 @@ def rss(request):
     fg.link( href='http://www.armstrongandgettybingo.com', rel='alternate' )
     fg.logo('https://s3-us-west-1.amazonaws.com/bencast/bingologo.png')
     fg.subtitle('Armstrong and Getty Bingo')
+    fg.description('The Armstrong and Getty Show - Unofficial Feed including Archives back to 2001.')
     fg.link( href='http://www.armstrongandgettybingo.com/rss', rel='self' )
     fg.language('en')
     pacific = pytz.timezone('America/Los_Angeles')
