@@ -54,7 +54,7 @@
                 <li class="hidden-sm hidden-xs"><a href="{% url 'clips' %}"><i class="fa fa-video-camera"></i> Clip Gallery</a></li>
                 <li class="nav-new"><a href="{% url 'archives' %}"><i class="fa fa-archive"></i> Archives</a></li>
                 <li><a href="{% url 'search' %}"><i class="fa fa-search"></i> Search</a></li>
-                <li><a href="{% url 'rss' %}"><i class="fa fa-rss"></i> Podcast</a></li>
+                <li><a href="{% url 'podcast' %}"><i class="fa fa-rss"></i> Podcast</a></li>
                 <li><a href="{% url 'about' %}"><i class="fa fa-info-circle"></i> About</a></li>
             </ul>
             {% if feed %}
@@ -115,7 +115,7 @@
                 <li><a href="/650/2004/1">2004</a></li>
                 <li><a href="/650/2005/1">2005</a></li>
                 <li><a href="/650/2006/1">2006</a></li>
-                <li id="archive-note"><a href="{% url 'rss' %}">New Podcast Link!</a></li>
+                <li id="archive-note"><a href="{% url 'podcast' %}"><i class="fa fa-rss"></i> NEW Podcast!!</a></li>
             </ol>
         </li>
     </ul>

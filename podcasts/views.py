@@ -196,6 +196,7 @@ def minical(request, feed='910', year=None, month=None):
 def archives(request):
     return render(request, 'archives.html')
 
+
 def about(request):
     return render(request, 'about.html')
 
@@ -243,3 +244,7 @@ def rss(request):
         fe.enclosure(hour.link, 0, 'audio/mpeg')
         fe.published(pacific.localize(hour.pub_date))
     return HttpResponse(fg.rss_str(pretty=True), content_type='application/rss+xml')
+
+
+def podcast(request):
+    return render(request, 'podcast.html')

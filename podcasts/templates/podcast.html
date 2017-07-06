@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block breadcrumbs %}
+    <li><a href="/">Home</a></li>
+    <li class="active">Podcast</li>
+{% endblock %}
+{% block metadescription %}Armstrong and Getty Podcast Calendar and fifteen year show archive.{% endblock %}
+{% block content %}
+
+    <div class="container">
+        <h1>Armstrong & Getty Podcast</h1>
+
+        <div class="well">
+            <h3>We now support native Podcast apps via a true RSS feed<i>!</i></h3>
+
+            <p>Launch your favorite podcast software (I recommend <a href="http://www.downcastapp.com/">Downcast</a> on iOS), and
+            add a podcast. If it asks whether you want to search or enter the podcast manually, choose
+            manual and enter the URL:</p>
+
+            <h2>http://www.armstrongandgettybingo.com/rss</h2>
+
+            <p>Or if you're using iTunes, you can subscribe though there:</p>
+
+            <p><a href=https://itunes.apple.com/us/podcast/the-armstrong-and-getty-show-bingo/id1256131752?mt=2">https://itunes.apple.com/us/podcast/the-armstrong-and-getty-show-bingo/id1256131752?mt=2</a></p>
+            
+
+
+            <h3>Donate</h3>
+            <p>If you like this site enough to want to help with hosting costs, donations are appreciated
+                (but not at all required)</p>
+
+            <p>
+                <h4>PayPal</h4> <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+                    <input type="hidden" name="cmd" value="_s-xclick">
+                    <input type="hidden" name="hosted_button_id" value="3C5A6CQC8S8ZN">
+                    <input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donate_SM.gif" border="0"
+                           name="submit" alt="PayPal - The safer, easier way to pay online!">
+                    <img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
+                </form>
+                <h4>BitCoin</h4>
+                <div>
+                    <a href="bitcoin:1KzTSfqjF2iKCduwz59nv2uqh1W2JsTxZH"> <code>17FJJYY2B11Bx7xx5HepjJ3xAdaB14UMiw</code> </a>
+                </div>
+            </p>
+            <h4>KFTC<i>!</i></h4>
+            - <a href="http://www.bugben.com">Ben in San Jose</a><br>
+            You're <i>HUGE</i> in the 'ho!
+        </div>
+    </div>
+{% endblock %}

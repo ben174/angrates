@@ -16,6 +16,7 @@ urlpatterns = [
     url(r'^refresh/(?P<scraper>.+)/$', podcasts.views.do_refresh, name='do_refresh'),
     url(r'^clips/$', podcasts.views.clips, name='clips'),
     url(r'^rss/$', podcasts.views.rss, name='rss'),
+    url(r'^podcast/$', podcasts.views.podcast, name='podcast'),
     url(r'^about/$', podcasts.views.about, name='about'),
     url(r'^archives/$', podcasts.views.archives, name='archives'),
     url(r'^search/$', podcasts.views.search, name='search'),
