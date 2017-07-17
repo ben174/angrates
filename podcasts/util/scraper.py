@@ -56,7 +56,6 @@ class FeedScraper:
 
         future_cutoff = datetime.datetime.now() + datetime.timedelta(days=1)
         for item in items:
-            media_title = item.find('mediaTitle').text
             description = item.find('description').text
             description = re.sub('\s+', ' ', description).strip()
             summary = item.find('{http://www.itunes.com/dtds/podcast-1.0.dtd}summary').text
@@ -83,6 +82,37 @@ class FeedScraper:
                 yield LogLevels.WARNING, 'Updated: ' + str(hour)
         yield LogLevels.SUCCESS, 'Successfully refreshed feed: 910'
 
+
+    def scrape_iheart(self):
+        xml_data = requests.get('https://post.futurimedia.com/ksteam/playlist/rss/12.xml').text
+        xml_data = xml_data.encode('utf-8').strip()
+        root = ET.fromstring(xml_data)
+        items = root.findall('channel/item')
+        future_cutoff = datetime.datetime.now() + datetime.timedelta(days=1)
+
+        for item in items:
+            description = item.find('description').text
+            description = re.sub('\s+', ' ', description).strip()
+            summary =  description
+            pub_date = item.find('pubDate').text
+            title = item.find('title').text
+            title = re.sub('\s+', ' ', title).strip()
+            url = item.find('enclosure').attrib['url']
+            dt = self._get_iheart_date(pub_date, title)
+            if not dt:
+                yield LogLevels.ERROR, 'Error Parsing Title: ' + title
+                continue
+            if dt > future_cutoff:
+                yield LogLevels.ERROR, 'Won\'t try to create an episode in the future'
+                continue
+            print 'Creating hour: {}'.format(dt)
+            hour, created = Hour.objects.get_or_create(pub_date=dt, feed="650")
+            hour.description = description
+            hour.title = summary
+            hour.link = url
+            hour.save()
+            print hour
+
     def _get_910_date(self, pub_date, title):
         months = {
             'Jan': 1,
@@ -104,6 +134,31 @@ class FeedScraper:
             m = months[m]
             d, y = int(d), int(y)
             h = 5 + int(title[-1])
+            return datetime.datetime(y, m, d, h, 0, 0)
+        except:
+            return None
+
+    def _get_iheart_date(self, pub_date, title):
+        months = {
+            'Jan': 1,
+            'Feb': 2,
+            'Mar': 3,
+            'Apr': 4,
+            'May': 5,
+            'Jun': 6,
+            'Jul': 7,
+            'Aug': 8,
+            'Sep': 9,
+            'Oct': 10,
+            'Nov': 11,
+            'Dec': 12,
+        }
+        title = re.sub('\s+', ' ', title).strip()
+        try:
+            d, m, y = re.search(r'.*,\s*([0-9]+)\s+(...)\s+([0-9]{4})', pub_date).groups()
+            m = months[m]
+            d, y = int(d), int(y)
+            h = int(re.search(r'([0-9])AM', title).groups()[0])
             return datetime.datetime(y, m, d, h, 0, 0)
         except:
             return None

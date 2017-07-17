@@ -2,6 +2,7 @@ import datetime
 import calendar
 import pytz
 
+import requests
 from django.core.exceptions import ObjectDoesNotExist
 from django.core.urlresolvers import reverse
 from django.http import HttpResponse, HttpResponseNotFound
