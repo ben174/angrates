@@ -93,7 +93,6 @@ class FeedScraper:
         for item in items:
             description = item.find('description').text
             description = re.sub('\s+', ' ', description).strip()
-            summary =  description
             pub_date = item.find('pubDate').text
             title = item.find('title').text
             title = re.sub('\s+', ' ', title).strip()
@@ -108,7 +107,7 @@ class FeedScraper:
             print 'Creating hour: {}'.format(dt)
             hour, created = Hour.objects.get_or_create(pub_date=dt, feed="650")
             hour.description = description
-            hour.title = summary
+            hour.title = title
             hour.link = url
             hour.save()
             print hour
