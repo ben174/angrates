@@ -1,6 +1,7 @@
 import datetime
 import calendar
 import pytz
+import uuid
 
 import requests
 from django.core.exceptions import ObjectDoesNotExist
@@ -225,6 +226,36 @@ def robots(request):
 
 @cache_page(60 * 60)
 def rss(request):
+    # track it!
+    #   v=1              // Version.
+    #   &tid=UA-XXXXX-Y  // Tracking ID / Property ID.
+    #   &cid=555         // Anonymous Client ID.
+
+    #   &t=pageview      // Pageview hit type.
+    #   &dh=mydemo.com   // Document hostname.
+    #   &dp=/home        // Page.
+    #   &dt=homepage     // Title.
+    angrates_uuid = uuid.UUID('f93c5388-f60b-5159-bbfc-d08d6f7b401f')
+    x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
+    if x_forwarded_for:
+        ip = x_forwarded_for.split(',')[0]
+    else:
+        ip = request.META.get('REMOTE_ADDR')
+
+    cid = uuid.uuid5(angrates_uuid, ip)
+
+    data = {
+        'v': 1,
+        'tid': 'UA-19269567-1',
+        'cid': cid,
+        't': 'pageview',
+        'dh': 'armstrongandgettybingo.com',
+        'dp': '/rss/',
+        'dt': 'Podcast',
+    }
+
+    requests.post('https://www.google-analytics.com/collect', data=data)
+
     fg = FeedGenerator()
     fg.load_extension('podcast')
     fg.id('http://www.armstrongandgettybingo.com/rss')
