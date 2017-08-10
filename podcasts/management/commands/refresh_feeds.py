@@ -24,9 +24,11 @@ class Command(BaseCommand):
         }
         scrapes = []
         if options['feed'] == '650' or options['feed'] == 'both':
-            scrapes.append(scraper.scrape_650)
+            #scrapes.append(scraper.scrape_650)
+            pass
         if options['feed'] == '910' or options['feed'] == 'both':
-            scrapes.append(scraper.scrape_910)
+            # scrapes.append(scraper.scrape_910)
+            pass
         if options['feed'] == 'iheart' or options['feed'] == 'both':
             scrapes.append(scraper.scrape_iheart)
         for scrape in scrapes:
