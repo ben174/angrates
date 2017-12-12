@@ -4,6 +4,7 @@ import re
 import string
 import xml.etree.ElementTree as ET
 import datetime
+import dateutil
 
 import requests
 
@@ -41,7 +42,8 @@ class FeedScraper:
             hour.description = description
             hour.title = title
             hour.link = url
-            hour.save()
+            if not created:
+                hour.save()
             if created:
                 yield LogLevels.SUCCESS, 'Created: ' + str(hour)
             else:
@@ -51,6 +53,9 @@ class FeedScraper:
 
     def scrape_910(self):
         xml_data = requests.get('http://www.talk910.com/podcast/ang2011.xml').text
+        xml_data = xml_data.encode('utf-8').strip()
+        import pdb
+        pdb.set_trace()
         root = ET.fromstring(xml_data)
         items = root.findall('channel/item')
 
@@ -82,6 +87,36 @@ class FeedScraper:
                 yield LogLevels.WARNING, 'Updated: ' + str(hour)
         yield LogLevels.SUCCESS, 'Successfully refreshed feed: 910'
 
+    def scrape_audioboom(self):
+        xml_data = requests.get('https://audioboom.com/channels/4693403.rss').text
+        xml_data = xml_data.encode('utf-8').strip()
+        root = ET.fromstring(xml_data)
+        items = root.findall('channel/item')
+        future_cutoff = datetime.datetime.now() + datetime.timedelta(days=1)
+
+        for item in items:
+            description = item.find('title').text
+            description = re.sub('\s+', ' ', description).strip()
+            pub_date = item.find('pubDate').text
+            title = item.find('title').text
+            title = re.sub('\s+', ' ', title).strip()
+            url = item.find('enclosure').attrib['url']
+            dt = None
+            try:
+                dt = self._get_audioboom_date(pub_date, title)
+            except:
+                pass
+            if not dt:
+                yield LogLevels.ERROR, 'Error Parsing Title: ' + title
+                continue
+            if dt > future_cutoff:
+                yield LogLevels.ERROR, 'Won\'t try to create an episode in the future'
+                continue
+            hour, created = Hour.objects.get_or_create(pub_date=dt, feed="650")
+            hour.description = description
+            hour.title = title
+            hour.link = url
+            hour.save()
 
     def scrape_iheart(self):
         xml_data = requests.get('https://post.futurimedia.com/ksteam/playlist/rss/12.xml').text
@@ -104,13 +139,11 @@ class FeedScraper:
             if dt > future_cutoff:
                 yield LogLevels.ERROR, 'Won\'t try to create an episode in the future'
                 continue
-            print 'Creating hour: {}'.format(dt)
             hour, created = Hour.objects.get_or_create(pub_date=dt, feed="650")
             hour.description = description
             hour.title = title
             hour.link = url
             hour.save()
-            print hour
 
     def _get_910_date(self, pub_date, title):
         months = {
@@ -136,6 +169,10 @@ class FeedScraper:
             return datetime.datetime(y, m, d, h, 0, 0)
         except:
             return None
+
+    def _get_audioboom_date(self, pub_date, title):
+        dt = dateutil.parser.parse(title[:-4])
+        return datetime.datetime(dt.year, dt.month, dt.day, int(title[-3]))
 
     def _get_iheart_date(self, pub_date, title):
         months = {
@@ -185,7 +222,6 @@ class ClipScraper:
         reader = csv.reader(f)
         for row in reader:
             row = [filter(lambda x: x in string.printable, c) for c in row]
-            print row
             key = row[0]
             if key and key != 'Unique Key':
                 clip, created = Clip.objects.get_or_create(key=key)
