@@ -104,6 +104,9 @@ class FeedScraper:
             dt = None
             try:
                 dt = self._get_audioboom_date(pub_date, title)
+                if dt.hour == 5:
+                    # skip recap hour
+                    continue
             except:
                 pass
             if not dt:
