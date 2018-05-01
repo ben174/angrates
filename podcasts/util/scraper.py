@@ -135,7 +135,17 @@ class FeedScraper:
             title = item.find('title').text
             title = re.sub('\s+', ' ', title).strip()
             url = item.find('enclosure').attrib['url']
-            dt = self._get_iheart_date(pub_date, title)
+            regex = r"^(\d+)\/(\d+)\/(\d+).*Hr\.\s(\d)\s(.*)$"
+            try:
+                m, d, y, h, title = re.findall(regex, title)[0]
+            except:
+                print 'Error parsing title: {}'.format(title)
+                continue
+            m, d, y, h = int(m), int(d), int(y) + 2000, int(h) + 5
+            dt = datetime.datetime(y, m, d, h, 0, 0)
+
+            # dt = self._get_iheart_date(pub_date, title)
+
             if not dt:
                 yield LogLevels.ERROR, 'Error Parsing Title: ' + title
                 continue
@@ -146,6 +156,7 @@ class FeedScraper:
             hour.description = description
             hour.title = title
             hour.link = url
+            print 'Created hour: {}'.format(dt)
             hour.save()
 
     def _get_910_date(self, pub_date, title):

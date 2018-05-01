@@ -8,7 +8,7 @@ lxml==3.8.0
 oauthlib==2.0.1
 praw==4.0.0
 prawcore==0.3.0
-psycopg2==2.6
+psycopg2==2.7.4
 python-dateutil==2.6.0
 python-twitter==3.2
 pytz==2017.2
